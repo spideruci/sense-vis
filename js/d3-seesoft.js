@@ -87,9 +87,7 @@ d3.selectAll("#updateButton").on("click", function() {
       return;
     }
 
-    url = url+"/branches/" + repo.default_branch;
-
-    d3.json(url, function(error, data) {
+    d3.json(url+"/branches/" + repo.default_branch, function(error, data) {
       if(error) {
         console.log(error);
         return;
