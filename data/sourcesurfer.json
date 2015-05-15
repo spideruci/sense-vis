@@ -1,0 +1,280 @@
+{
+  "sha": "e4bd69124df22fcd4d00d59f54ad894840eb0c00",
+  "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/e4bd69124df22fcd4d00d59f54ad894840eb0c00",
+  "tree": [
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ff7b181677304d113ecca224ea5d31e530a5fff",
+      "size": 845,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/2ff7b181677304d113ecca224ea5d31e530a5fff"
+    },
+    {
+      "path": ".travis.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "80b6f4b7806e4205af330adef690500f4d281496",
+      "size": 48,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/80b6f4b7806e4205af330adef690500f4d281496"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e5e413121a7479ebc28343066a20fb31ca76fe8e",
+      "size": 1082,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/e5e413121a7479ebc28343066a20fb31ca76fe8e"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "42b2b9cf9626000f0e83efbda052ba34d4c66eb4",
+      "size": 5893,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/42b2b9cf9626000f0e83efbda052ba34d4c66eb4"
+    },
+    {
+      "path": "conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97d6b64603b6beb66a0c43ae80f71cb1513e60fe",
+      "size": 260,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/97d6b64603b6beb66a0c43ae80f71cb1513e60fe"
+    },
+    {
+      "path": "conf.yaml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f2b42840136a6318bcaf48ce5aff53c611e76d4",
+      "size": 1261,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/0f2b42840136a6318bcaf48ce5aff53c611e76d4"
+    },
+    {
+      "path": "pom.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "77771329511f9a2486b31719133ff2190b5348c6",
+      "size": 2157,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/77771329511f9a2486b31719133ff2190b5348c6"
+    },
+    {
+      "path": "src",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e6b1062f6db9a396256b6cf3ea8cfef0dbf555e8",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/e6b1062f6db9a396256b6cf3ea8cfef0dbf555e8"
+    },
+    {
+      "path": "src/org",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0c97b99de32e5cc53a796af8b1fba4aee79f469c",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/0c97b99de32e5cc53a796af8b1fba4aee79f469c"
+    },
+    {
+      "path": "src/org/spideruci",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "cb30232b5400d61a98e9f39ba558690de6f8b3ce",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/cb30232b5400d61a98e9f39ba558690de6f8b3ce"
+    },
+    {
+      "path": "src/org/spideruci/analysis",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "00c20f655c93eace3129287c717c517767e24277",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/00c20f655c93eace3129287c717c517767e24277"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "06622f59a8e0d6815cfa71ae17c4b69bd6fe75f6",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/06622f59a8e0d6815cfa71ae17c4b69bd6fe75f6"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1b3ab0f6ad503a204be8ff1c47ec2624cd6f161c",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/1b3ab0f6ad503a204be8ff1c47ec2624cd6f161c"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/SourceDirSurfer.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9e52ff2a800e98ab93423006fadee3dc2af7628f",
+      "size": 1472,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/9e52ff2a800e98ab93423006fadee3dc2af7628f"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/SourceSurfer.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4dcaf4f58372cd1f27f91658b2547a21cf9437e1",
+      "size": 6706,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/4dcaf4f58372cd1f27f91658b2547a21cf9437e1"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/SourceSurfingEventListener.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74bd1c6382aff57c749de0f01d70396e15e2f6d3",
+      "size": 448,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/74bd1c6382aff57c749de0f01d70396e15e2f6d3"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/SourcefileSurfer.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d509d55b4ebabd11c0a0413dbfd35ef4f2e82ee2",
+      "size": 1623,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/d509d55b4ebabd11c0a0413dbfd35ef4f2e82ee2"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/models",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5b94603ce8b8a7f9a64da44c13bcc1d52020f058",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/5b94603ce8b8a7f9a64da44c13bcc1d52020f058"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/models/SourceLine.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cfd4e2874b63e6352386946c6accdacf95f471c",
+      "size": 389,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/3cfd4e2874b63e6352386946c6accdacf95f471c"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/models/SourcefileData.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ffa5e442cc1ee04cea891b986326fb2e0bd772cd",
+      "size": 286,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/ffa5e442cc1ee04cea891b986326fb2e0bd772cd"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/plugins",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "eb3723f6575361e5699e62405f9296940d876745",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/eb3723f6575361e5699e62405f9296940d876745"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/plugins/AbstractSourceSurferPlugin.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "201c8b5cd9d1d69c55f9e83206d95f59f69fe2d2",
+      "size": 303,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/201c8b5cd9d1d69c55f9e83206d95f59f69fe2d2"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/plugins/JavaSourceJsonifier.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7c29cf6062034d5da619698c4d70c033027a6c48",
+      "size": 1039,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/7c29cf6062034d5da619698c4d70c033027a6c48"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/plugins/JavaSourcePrinter.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75786d85b72af350e99ea0a68958752e97820f84",
+      "size": 905,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/75786d85b72af350e99ea0a68958752e97820f84"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/util",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c665fa3539e9a522c2cda490e21ac484af2776d2",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/c665fa3539e9a522c2cda490e21ac484af2776d2"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/util/Cli.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e823dc8f44e2380ac49cd7bf906d61643586c35e",
+      "size": 2705,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/e823dc8f44e2380ac49cd7bf906d61643586c35e"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/util/JsonUtils.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b4f1b70460bd1c0630d6fb6e584f966d923e535a",
+      "size": 810,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/b4f1b70460bd1c0630d6fb6e584f966d923e535a"
+    },
+    {
+      "path": "src/org/spideruci/analysis/statik/sourcecode/util/SourceFilter.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7544b0cdc1a816c466e5f1511a2caece5c519868",
+      "size": 1347,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/7544b0cdc1a816c466e5f1511a2caece5c519868"
+    },
+    {
+      "path": "test",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "752cec330f69ad1d3c76749bc8580f5bc41f2591",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/752cec330f69ad1d3c76749bc8580f5bc41f2591"
+    },
+    {
+      "path": "test/org",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7b8224d8a0840b11691ce3de06d7eda0e31b8b33",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/7b8224d8a0840b11691ce3de06d7eda0e31b8b33"
+    },
+    {
+      "path": "test/org/spideruci",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "069db35b2d1c393f7453ed77e02131caec33881f",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/069db35b2d1c393f7453ed77e02131caec33881f"
+    },
+    {
+      "path": "test/org/spideruci/analysis",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "dee02d924344e3f05e2f26bd2f5d716a146a32b2",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/dee02d924344e3f05e2f26bd2f5d716a146a32b2"
+    },
+    {
+      "path": "test/org/spideruci/analysis/statik",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "76e9a7ecdffcf3d9ed211802cca54e4ded77d76c",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/76e9a7ecdffcf3d9ed211802cca54e4ded77d76c"
+    },
+    {
+      "path": "test/org/spideruci/analysis/statik/sourcecode",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "320a5636a7ad86b3b9ee8f357f90c18ab31bcff5",
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/trees/320a5636a7ad86b3b9ee8f357f90c18ab31bcff5"
+    },
+    {
+      "path": "test/org/spideruci/analysis/statik/sourcecode/TestSourceDirSurfer.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b961524408545f2874305897c122807231e07bb1",
+      "size": 5340,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/b961524408545f2874305897c122807231e07bb1"
+    },
+    {
+      "path": "test/org/spideruci/analysis/statik/sourcecode/TestSourcefileSurfer.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c6f19965e9a2172e4ec63bb941387a580f268111",
+      "size": 4974,
+      "url": "https://api.github.com/repos/inf295uci-2015/SourceSurfer/git/blobs/c6f19965e9a2172e4ec63bb941387a580f268111"
+    }
+  ],
+  "truncated": false
+}
