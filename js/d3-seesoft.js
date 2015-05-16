@@ -27,35 +27,34 @@ function update(root) {
   div.exit().transition().duration(200).remove();
   
   div.enter().append("div")
-            .attr("class", "node")
+            // .attr("class", "node")
             .on('click', function(d) {
               display_file(d, function(str) {
-                return atob(str).replace(/\n/g, "<br/>");
+                //return atob(str).replace(/\n/g, "<br/>");
               });
-            })
-            .transition().duration(750)
-            .call(position)
-            .style("background", function(d) { 
-              return d.children ? color(d.name) : null; 
-            })
-            .text(function(d) { 
-              return d.children ? null : d.name; 
             });
+            // .transition().duration(750)
+            // .call(position)
+            // .style("background", function(d) { 
+            //   return d.children ? color(d.name) : null; 
+            // })
+            // .text(function(d) { 
+            //   return d.children ? null : d.name; 
+            // });
 
   d3.select('body').append('pre').attr('id', 'code')
 
   
-  
-  // div.attr("class", "node")
-  //   .transition().duration(750)
-  //   .call(position)
-  //   .style("background", function(d) { 
-  //     return d.children ? color(d.name) : null; 
-  //   })
-  //   .text(function(d) { 
-  //     return d.children ? null : d.name; 
-  //   })
-  //   .transition().duration(750);
+  div.attr("class", "node")
+    .transition().duration(750)
+    .call(position)
+    .style("background", function(d) { 
+      return d.children ? color(d.name) : null; 
+    })
+    .text(function(d) { 
+      return d.children ? null : d.name; 
+    })
+    .transition().duration(750);
 }
 
 function display_file(file, decoder) {
@@ -76,10 +75,37 @@ function display_file(file, decoder) {
   });
 }
 
-d3.selectAll("#updateButton").on("click", function() {
+
+if(offline) {
+  d3.selectAll("#updateButton").on("click", getData_offline);
+}
+else {
+  d3.selectAll("#updateButton").on("click", getData);
+}
+
+
+function getData_offline() {
   var user = d3.select("#user").property('value');
-  var repo = d3.select("#repo").property('value')
+  var repo = d3.select("#repo").property('value');
+  var url = 'data/'+repo+'.json';
+
+  console.log(url);
+  d3.json(url, function(error, data) {
+    if(error) {
+      console.log(error);
+      return;
+    }
+    var root = parseData(data.tree);
+    update(root);
+  });
+
+}
+
+function getData() {
+  var user = d3.select("#user").property('value');
+  var repo = d3.select("#repo").property('value');
   var url = 'https://api.github.com/repos/'+user+'/'+repo;
+
 
   d3.json(url, function(error, repo) {
     if(error) {
@@ -105,7 +131,8 @@ d3.selectAll("#updateButton").on("click", function() {
       });
     });
   });
-});
+}
+
 
 function position() {
     this.style("left", function(d) { return d.x + "px"; })
