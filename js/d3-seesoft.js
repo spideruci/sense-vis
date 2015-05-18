@@ -75,6 +75,7 @@ function display_file(file, decoder) {
   });
 }
 
+var offline = false;
 
 if(offline) {
   d3.selectAll("#updateButton").on("click", getData_offline);
