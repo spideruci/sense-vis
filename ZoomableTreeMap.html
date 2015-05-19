@@ -3,20 +3,33 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <link type="text/css" rel="stylesheet" href="css/seesoft.css"/>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="js/d3-min.js"></script>
+  <script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"> </script>
+  <script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> </script>
 </head>
 <body>
-  <form>
-    User name: <input type="text" id="user" value="inf295uci-2015">
-    Repo name: <input type="text" id="repo" value="SourceSurfer">
-    <input id="updateButton" type="button" value="Update"/>
-  </form>
+  <div id="Formspace">
+    <form>
+      User name: <input type="text" id="user" value="inf295uci-2015">
+      &nbsp; Repo name: <input type="text" id="repo" value="tacoco">
+      <input id="updateButton" type="button" value="Update"/>
+      &nbsp; Search file: <input type="text" id="search" value="pom.xml">
+      <input id="searchButton" type="button" value="Search"/>
+      <br>
+    </form>
+  </div>
+  <div> <br> <br> <br> <div>
+  <div id="TreemapSpace">
+  </div>
 </body>
 
 <script>
 
-  var w = 1280 - 80,
-  h = 800 - 180,
+  var margin = {top: 10, right: 10, bottom: 10, left: 10},
+  width = 960 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
+  var w = width,
+  h = height,
   x = d3.scale.linear().range([0, w]),
   y = d3.scale.linear().range([0, h]),
   color = d3.scale.category20c();
@@ -27,176 +40,210 @@
   .sticky(false)
   .value(function(d) { return d.size; });
 
-  var svg = d3.select("body").append("div")
+  /*var svg = d3.select("body").append("div")
   .attr("class", "chart")
   .style("width", w + "px")
-  .style("height", h + "px")
+  .style("height", h + "px")*/
+  var svg = d3.select("#TreemapSpace").append("div")
+  .style("position", "relative")
+  .style("width", (width + margin.left + margin.right) + "px")
+  .style("height", (height + margin.top + margin.bottom) + "px")
+  .style("left", margin.left + "px")
+  .style("top", margin.top + "px")
   .append("svg:svg")
   .attr("width", w)
   .attr("height", h)
-  .append("svg:g")
-  .attr("transform", "translate(.5,.5)");
+  .append("svg:g");
+  /*var svg = d3.select("#TreemapSpace").append("svg:svg")
+  .attr("width", w)
+  .attr("height", h)
+  .append("svg:g");*/
+  //.attr("transform", "translate(.5,.5)");
 
 
-var offline = false;
+  var offline = false;
 
-if(offline) {
-  d3.selectAll("#updateButton").on("click", getData_offline);
-}
-else {
-  d3.selectAll("#updateButton").on("click", getData);
-}
+  if(offline) {
+    d3.selectAll("#updateButton").on("click", getData_offline);
+  }
+  else {
+    d3.selectAll("#updateButton").on("click", getData);
+  }
 
+  d3.selectAll("#searchButton").on("click", searchFile);
 
-function getData_offline() {
-  var user = d3.select("#user").property('value');
-  var repo = d3.select("#repo").property('value');
-  var url = 'data/'+repo+'.json';
+  function searchFile() {
+    var search_term = d3.select("#search").property('value');
+    console.log(search_term);
+    var node = svg.selectAll(".cell");
+    var selected = node.filter(function (d,i) {
+      return d.name == search_term;
+    });
+    selected.each(function(d) {
+      zoom(root == d.parent ? root : d.parent);
+    });
 
-  console.log(url);
-  d3.json(url, function(error, data) {
-    if(error) {
-      console.log(error);
-      return;
-    }
-    var root = parseData(data.tree);
-    update(root);
-  });
-}
+  }
 
-function getData() {
-  var user = d3.select("#user").property('value');
-  var repo = d3.select("#repo").property('value');
-  var url = 'https://api.github.com/repos/'+user+'/'+repo;
+  function getData_offline() {
+    var user = d3.select("#user").property('value');
+    var repo = d3.select("#repo").property('value');
+    var url = 'data/'+repo+'.json';
 
+    console.log(url);
+    d3.json(url, function(error, data) {
+      if(error) {
+        console.log(error);
+        return;
+      }
+      var root = parseData(data.tree);
+      update(root);
+    });
+  }
 
-  d3.json(url, function(error, repo) {
-    if(error) {
-      console.log(error);
-      return;
-    }
-
-    d3.json(url+"/branches/" + repo.default_branch, function(error, data) {
+  function getData() {
+    var user = d3.select("#user").property('value');
+    var repo = d3.select("#repo").property('value');
+    var url = 'https://api.github.com/repos/'+user+'/'+repo;
+    d3.json(url, function(error, repo) {
       if(error) {
         console.log(error);
         return;
       }
 
-      console.log(data);
-      url = url + "/git/trees/"+data.commit.sha+"?recursive=1";
-      d3.json(url, function(error, data) {
+      d3.json(url+"/branches/" + repo.default_branch, function(error, data) {
         if(error) {
           console.log(error);
           return;
         }
-        var root = parseData(data.tree);
-        update(root);
+
+        console.log(data);
+        url = url + "/git/trees/"+data.commit.sha+"?recursive=1";
+        d3.json(url, function(error, data) {
+          if(error) {
+            console.log(error);
+            return;
+          }
+          var root = parseData(data.tree);
+          console.log(root);
+          update(root);
+
+        });
       });
     });
-  });
-}
-
-
-
-
-function update (data) {
-  node = root = data;
-
-  var nodes = treemap.nodes(root)
-  .filter(function(d) { return !d.children; });
-
-  var cell = svg.selectAll("g")
-  .data(nodes);
-
-  cell.exit().remove();
-
-  cell.enter().append("svg:g");
-
-  cell
-  .attr("class", "cell")
-  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-  .on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
-
-  cell.append("svg:rect")
-  .attr("width", function(d) { return d.dx ; })
-  .attr("height", function(d) { return d.dy ; })
-  .style("fill", function(d) { return color(d.parent.name); });
-
-  cell.append("svg:text")
-  .attr("x", function(d) { return d.dx / 2; })
-  .attr("y", function(d) { return d.dy / 2; })
-  .attr("dy", ".35em")
-  .attr("text-anchor", "middle")
-  .text(function(d) { return d.name; })
-  .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
-
-  d3.select(window).on("click", function() { zoom(root); });
-  
-  zoom(root);
-}
-
-function size(d) {
-  return d.size;
-}
-
-function count(d) {
-  return 1;
-}
-
-function zoom(d) {
-  var kx = w / d.dx, ky = h / d.dy;
-  x.domain([d.x, d.x + d.dx]);
-  y.domain([d.y, d.y + d.dy]);
-
-  var t = svg.selectAll("g.cell").transition()
-  .duration(d3.event.altKey ? 7500 : 750)
-  .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
-
-  t.select("rect")
-  .attr("width", function(d) { return kx * d.dx ; })
-  .attr("height", function(d) { return ky * d.dy ; })
-
-  t.select("text")
-  .attr("x", function(d) { return kx * d.dx / 2; })
-  .attr("y", function(d) { return ky * d.dy / 2; })
-  .style("opacity", function(d) { return kx * d.dx > d.w ? 1 : 0; });
-
-  node = d;
-  d3.event.stopPropagation();
-}
-
-
-Array.prototype.select = function(closure){
-  for(var n = 0; n < this.length; n++) {
-    if(closure(this[n])){
-      return this[n];
+    /*var optArray = [];
+    for (var i = 0; i < graph.nodes.length - 1; i++) {
+      optArray.push(graph.nodes[i].name);
     }
+    optArray = optArray.sort();
+    $(function () {
+      $("#search").autocomplete({
+        source: optArray
+      });
+    });*/
   }
-  return null;
-};
 
-function parseData(data) {
-  var root = {};
-  root.children = [];
-  for(var i =0; i < data.length;i++){
-    var current = root.children;
-    var steps = data[i].path.split('/');
-    var steps_len = steps.length;
-    for(var j = 0 ; j < steps_len;j++) {
-      var step = steps[j];
-      if(j == steps_len - 1) {
-        current.push({name:step, size:data[i].size, url:data[i].url});
-        break;
+
+
+
+  function update (data) {
+    svg.selectAll("g").remove();
+    node = root = data;
+
+    var nodes = treemap.nodes(root)
+    .filter(function(d) { return !d.children; });
+
+    var cell = svg.selectAll("g")
+    .data(nodes);
+
+    cell.exit().remove();
+
+    cell.enter().append("svg:g");
+
+    cell
+    .attr("class", "cell")
+    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+    .on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
+    //.on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
+
+    cell.append("svg:rect")
+    .attr("width", function(d) { return d.dx ; })
+    .attr("height", function(d) { return d.dy ; })
+    .style("fill", function(d) { return color(d.parent.name); });
+
+    cell.append("svg:text")
+    .attr("x", function(d) { return d.dx / 2; })
+    .attr("y", function(d) { return d.dy / 2; })
+    .attr("dy", ".35em")
+    .attr("text-anchor", "middle")
+    .text(function(d) { return d.name; })
+    .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
+
+    d3.select(window).on("click", function() { zoom(root); });
+
+    zoom(root);
+  }
+
+  function size(d) {
+    return d.size;
+  }
+
+  function count(d) {
+    return 1;
+  }
+
+  function zoom(d) {
+    var kx = w / d.dx, ky = h / d.dy;
+    x.domain([d.x, d.x + d.dx]);
+    y.domain([d.y, d.y + d.dy]);
+
+    var t = svg.selectAll("g.cell").transition()
+    .duration(d3.event.altKey ? 7500 : 750)
+    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+    t.select("rect")
+    .attr("width", function(d) { return kx * d.dx ; })
+    .attr("height", function(d) { return ky * d.dy ; })
+
+    t.select("text")
+    .attr("x", function(d) { return kx * d.dx / 2; })
+    .attr("y", function(d) { return ky * d.dy / 2; })
+    .style("opacity", function(d) { return kx * d.dx > d.w ? 1 : 0; });
+
+    node = d;
+    d3.event.stopPropagation();
+  }
+
+
+  Array.prototype.select = function(closure){
+    for(var n = 0; n < this.length; n++) {
+      if(closure(this[n])){
+        return this[n];
       }
-      current = current.select(function(v){return v.name == step;});
-      current.children =  current.children || [];
-      current = current.children;
     }
+    return null;
+  };
+
+  function parseData(data) {
+    var root = {};
+    root.children = [];
+    for(var i =0; i < data.length;i++){
+      var current = root.children;
+      var steps = data[i].path.split('/');
+      var steps_len = steps.length;
+      for(var j = 0 ; j < steps_len;j++) {
+        var step = steps[j];
+        if(j == steps_len - 1) {
+          current.push({name:step, size:data[i].size, url:data[i].url});
+          break;
+        }
+        current = current.select(function(v){return v.name == step;});
+        current.children =  current.children || [];
+        current = current.children;
+      }
+    }
+    return root;
   }
-  return root;
-}
 
 </script>
-</body>
 </html>
-
