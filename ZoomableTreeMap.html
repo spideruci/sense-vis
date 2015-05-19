@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script type='text/javascript' src="http://code.jquery.com/jquery-2.1.3.min.js"> </script>
+  <script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"> </script>
+  <script type='text/css' src="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> </script>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <link type="text/css" rel="stylesheet" href="css/seesoft.css"/>
   <script src="js/d3-min.js"></script>
-  <script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"> </script>
-  <script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> </script>
+
 </head>
 <body>
-  <div id="Formspace">
+  <div class="ui-widget">
+   <!--<input id="search">
+    <button type="button" onclick="searchNode()">Search</button>
+  <div id="Formspace">-->
     <form>
-      User name: <input type="text" id="user" value="inf295uci-2015">
-      &nbsp; Repo name: <input type="text" id="repo" value="tacoco">
+      User: <input type="text" id="user" value="inf295uci-2015">
+      &nbsp; Repository: <input type="text" id="repo" value="tacoco">
       <input id="updateButton" type="button" value="Update"/>
       &nbsp; Search file: <input type="text" id="search" value="pom.xml">
       <input id="searchButton" type="button" value="Search"/>
+      <input id="zoomRestoreButton" type="button" value="Restore"/>
       <br>
     </form>
+
   </div>
   <div> <br> <br> <br> <div>
   <div id="TreemapSpace">
@@ -24,6 +31,18 @@
 </body>
 
 <script>
+
+  var optArray = [];
+  $(function () {
+    $("#search").autocomplete({
+      source: optArray
+    });
+  });
+
+  /*for (var i = 0; i < graph.nodes.length - 1; i++) {
+    optArray.push(graph.nodes[i].name);
+  }
+  optArray = optArray.sort();*/
 
   var margin = {top: 10, right: 10, bottom: 10, left: 10},
   width = 960 - margin.left - margin.right,
@@ -71,6 +90,11 @@
   }
 
   d3.selectAll("#searchButton").on("click", searchFile);
+  //d3.selectAll("#zoomRestoreButton").on("click", zoomOut);
+
+  function zoomOut() {
+    zoom(root);
+  }
 
   function searchFile() {
     var search_term = d3.select("#search").property('value');
@@ -125,22 +149,12 @@
             return;
           }
           var root = parseData(data.tree);
-          console.log(root);
           update(root);
 
         });
       });
     });
-    /*var optArray = [];
-    for (var i = 0; i < graph.nodes.length - 1; i++) {
-      optArray.push(graph.nodes[i].name);
-    }
-    optArray = optArray.sort();
-    $(function () {
-      $("#search").autocomplete({
-        source: optArray
-      });
-    });*/
+
   }
 
 
@@ -180,6 +194,20 @@
     .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
 
     d3.select(window).on("click", function() { zoom(root); });
+
+    // Section: Filling the AutoComplete Array
+    var all_files = svg.selectAll(".cell");
+    console.log("All Files:\n");
+    console.log(all_files);
+    var filesLength = 0;
+    all_files.each(function(d,i) {
+      optArray[i] = d.name;
+      filesLength++;
+    });
+    while(optArray.length > filesLength) {
+      optArray.pop();
+    }
+    //\Section
 
     zoom(root);
   }
