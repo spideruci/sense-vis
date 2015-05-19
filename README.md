@@ -2,7 +2,7 @@
 
 ### Change Log
 
-* #038d8875eade281910486cbcbaa261a9f2b89b8d:
+**038d8875eade281910486cbcbaa261a9f2b89b8d**
 
 1. Reduced the size of the TreeMap Layout
 2. Added the search functionality which does the same thing as zooming in on any file
