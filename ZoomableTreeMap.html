@@ -12,8 +12,13 @@
   <script src="js/underscore-min.js"></script>
   <script src="js/gh3.min.js"></script>
 
+  <!--Syntax Highlighter-->
+  <script type="text/javascript" src="js/shCore.js"></script>
+  <script type="text/javascript" src="js/shBrushJava.js"></script>
+  <link type="text/css" rel="stylesheet" href="css/shCoreEmacs.css"/>
+
 </head>
-<body>
+<body class="body">
   <div class="ui-widget">
    <!--<input id="search">
     <button type="button" onclick="searchNode()">Search</button>
@@ -147,7 +152,7 @@
         gh3_branch = gh3_repo.getBranchByName(gh3_repo.default_branch);
         gh3_branch.fetchContents(function (err, res) {
           if(err) { throw "outch ..." }
-          //console.log(gh3_branch);
+          console.log(gh3_branch);
         });
       });
     });
@@ -178,6 +183,17 @@
       });
     });
 
+  }
+
+
+  function drawCommits(){
+    /*
+      d3.json("https", function(error, repo) {
+      if(error) {
+        console.log(error);
+        return;
+      }
+*/
   }
 
 
@@ -265,7 +281,7 @@
     .style("opacity", function(d) { return kx * d.dx > d.w ? 1 : 0; });
 
     node = d;
-    d3.event.stopPropagation();
+    if(d3.event !=null) d3.event.stopPropagation();
 
     if(d.children==null) showDetails(d);
     else deleteDetails();
@@ -280,19 +296,29 @@
     
     var text = 
       svg.append("text")
-      .attr("id","detail")
+      .attr("id","commits")
       .attr("x","10")
       .attr("y","10");
 
-
+    var textarea =
+      //d3.select(".TreemapSpace").append("div")
+       svg.append("foreignObject")
+      .attr("id","src")
+      .attr("x", w/2 + 130)
+      .attr("y","10")
+      .append("xhtml:body")
+      .attr("class", "body_src")
+      .append("pre")
+      .attr("class", "src");
+      
     var file = new Gh3.File(null, gh3_user, gh3_repo.name, gh3_repo.default_branch);
     file.path = d.path;
-    /*
+    
     file.fetchContent(function (err, res) {
       if(err) { throw "outch ..." }
-      src = file.getRawContent();
+      textarea.text(file.getRawContent());
     });
-    */
+    
 
     file.fetchCommits(function (err, res) {
       if(err) { throw "outch ..." }
@@ -301,7 +327,10 @@
         text.append("tspan") 
             .attr("x", 10)
             .attr("dy", "1.2em")
+            .attr("class","log")
+            .attr("width", w/2)
             .text(commit.date +' '+ commit.author.name +' '+ commit.message );
+
       });
 
     });
@@ -310,7 +339,8 @@
   }
 
   function deleteDetails(d){
-    svg.select("#detail").remove();
+    svg.select("#commits").remove();
+    svg.select("#src").remove();
   }
 
 
