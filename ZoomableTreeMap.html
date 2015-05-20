@@ -290,10 +290,51 @@
 
   function showDetails(d){
 
-    var src;
-    var commits;
-
+    var margin = 10;
+    var g = svg.append("g")
+      .attr("id","detail");
     
+    var panel_commits = g.append("rect")
+      .attr("x", 10)
+      .attr("y", 10)
+      .attr("width", w/2 - margin)
+      .attr("height", h/2 - margin)
+      .attr("style","fill:black;fill-opacity:0.5")
+    
+    var text_commits = g.append("foreignObject")
+      .attr("x","10")
+      .attr("y","10")
+      .attr("width", w/2 - margin)
+      .attr("height", h/2 - margin)
+      .append("xhtml:body")
+      .attr("overflow", "scroll");
+
+    var panel_src = g.append("rect")
+      .attr("x", w/2 + margin)
+      .attr("y", 10)
+      .attr("width", w/2 - margin)
+      .attr("height", h - margin)
+      .attr("style","fill:black;fill-opacity:0.5")
+    
+    var text_src = g.append("foreignObject")
+      .attr("x", w/2 + margin)
+      .attr("y","10")
+      .attr("width", w/2 - margin)
+      .attr("height", h - margin)
+      .append("xhtml:body")
+      .attr("overflow", "scroll");
+
+      //.append("xhtml:body");
+      //.transition().duration(50);
+    /*
+    var panel_coverage = 
+      g.append("rect");
+    var panel_src = 
+      g.append("rect");
+*/
+
+
+  /*  
     var text = 
       svg.append("text")
       .attr("id","commits")
@@ -310,25 +351,33 @@
       .attr("class", "body_src")
       .append("pre")
       .attr("class", "src");
-      
+    */ 
     var file = new Gh3.File(null, gh3_user, gh3_repo.name, gh3_repo.default_branch);
     file.path = d.path;
     
     file.fetchContent(function (err, res) {
       if(err) { throw "outch ..." }
-      textarea.text(file.getRawContent());
+      text_src.append("xhtml:pre") 
+            //.attr("x", 10)
+            .attr("dy", "1.2em")
+            .attr("class","log")
+            .style("color", "#00ff00")
+            .style("font-size", "5px")
+            .text(file.getRawContent());
     });
     
 
     file.fetchCommits(function (err, res) {
       if(err) { throw "outch ..." }
 
+      
       file.eachCommit(function (commit) {
-        text.append("tspan") 
-            .attr("x", 10)
+        text_commits.append("xhtml:p") 
+            //.attr("x", 10)
             .attr("dy", "1.2em")
             .attr("class","log")
-            .attr("width", w/2)
+            .style("color", "#00ff00")
+            //.attr("width", w/2)
             .text(commit.date +' '+ commit.author.name +' '+ commit.message );
 
       });
@@ -336,11 +385,12 @@
     });
 
 
+  
+
   }
 
   function deleteDetails(d){
-    svg.select("#commits").remove();
-    svg.select("#src").remove();
+    svg.select("#detail").remove();
   }
 
 
