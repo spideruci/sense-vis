@@ -35,6 +35,7 @@
 
     </div>
     <div> <br> <br> <br> <div>
+      <div id="dir"></div>
       <div id="TreemapSpace">
       </div>
     </body>
@@ -215,7 +216,13 @@
     .attr("class", "cell")
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
     .on("click", function(d) { 
-      if(node == d) zoom(root);
+      
+      if(d==root) return;
+
+      if(d3.event.altKey){
+        return zoom(node.parent);  
+      }
+      
       while(node != d.parent) d = d.parent;
       return zoom(d); 
     });  
@@ -262,6 +269,8 @@
   }
 
   function zoom(d) {
+
+    d3.select("#dir").text(d.path);
 
     var kx = w / d.dx, ky = h / d.dy;
     x.domain([d.x, d.x + d.dx]);
@@ -324,34 +333,6 @@
       .append("xhtml:body")
       .attr("overflow", "scroll");
 
-      //.append("xhtml:body");
-      //.transition().duration(50);
-    /*
-    var panel_coverage = 
-      g.append("rect");
-    var panel_src = 
-      g.append("rect");
-*/
-
-
-  /*  
-    var text = 
-      svg.append("text")
-      .attr("id","commits")
-      .attr("x","10")
-      .attr("y","10");
-
-    var textarea =
-      //d3.select(".TreemapSpace").append("div")
-       svg.append("foreignObject")
-      .attr("id","src")
-      .attr("x", w/2 + 130)
-      .attr("y","10")
-      .append("xhtml:body")
-      .attr("class", "body_src")
-      .append("pre")
-      .attr("class", "src");
-    */ 
     var file = new Gh3.File(null, gh3_user, gh3_repo.name, gh3_repo.default_branch);
     file.path = d.path;
     
@@ -366,11 +347,8 @@
             .text(file.getRawContent());
     });
     
-
     file.fetchCommits(function (err, res) {
       if(err) { throw "outch ..." }
-
-      
       file.eachCommit(function (commit) {
         text_commits.append("xhtml:p") 
             //.attr("x", 10)
