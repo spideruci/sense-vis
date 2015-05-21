@@ -18,3 +18,7 @@
 3. fix zoom behavior
 	- zoom in: left mouse click
 	- zoom out: left mouse click + alt
+
+**17b9d98a39517ff144f891e249462899f213de4a**
+
+1. Added Double Click Show details functionality.
