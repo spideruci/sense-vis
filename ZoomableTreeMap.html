@@ -138,65 +138,37 @@
   var gh3_user;
   var gh3_repo;
   var gh3_branch;
+  var api_url;
   function getData() {
     var user = d3.select("#user").property('value');
     var repo = d3.select("#repo").property('value');
-    var url = 'https://api.github.com/repos/'+user+'/'+repo;
-
+    api_url = 'https://api.github.com/repos/'+user+'/'+repo;
+    
     gh3_user = new Gh3.User(user);
     gh3_repo = new Gh3.Repository(repo, gh3_user);
 
     gh3_repo.fetch(function (err, res) {
       if(err) { throw "outch ..." }
-      gh3_repo.fetchBranches(function (err, res) {
-        if(err) { throw "outch ..." }
-        gh3_branch = gh3_repo.getBranchByName(gh3_repo.default_branch);
-        gh3_branch.fetchContents(function (err, res) {
+        gh3_repo.fetchBranches(function (err, res) {
           if(err) { throw "outch ..." }
-          console.log(gh3_branch);
+            gh3_branch = gh3_repo.getBranchByName(gh3_repo.default_branch);
+          d3.json(api_url+"/branches/" + gh3_repo.default_branch, function(error, data) {
+            if(error) {
+              console.log(error);
+              return;
+            }
+            d3.json(api_url+ "/git/trees/"+data.commit.sha+"?recursive=1", function(error, data) {
+              if(error) {
+                console.log(error);
+                return;
+              }
+              var root = parseData(data.tree);
+              update(root);
+            });
+          });
         });
-      });
     });
-
-
-    d3.json(url, function(error, repo) {
-      if(error) {
-        console.log(error);
-        return;
-      }
-
-      d3.json(url+"/branches/" + repo.default_branch, function(error, data) {
-        if(error) {
-          console.log(error);
-          return;
-        }
-
-        url = url + "/git/trees/"+data.commit.sha+"?recursive=1";
-        d3.json(url, function(error, data) {
-          if(error) {
-            console.log(error);
-            return;
-          }
-          var root = parseData(data.tree);
-          update(root);
-
-        });
-      });
-    });
-
   }
-
-
-  function drawCommits(){
-    /*
-      d3.json("https", function(error, repo) {
-      if(error) {
-        console.log(error);
-        return;
-      }
-*/
-  }
-
 
   function update (data) {
     svg.selectAll("g").remove();
@@ -217,7 +189,7 @@
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
     .on("click", function(d) {
 
-      if(d==root) return;
+      if(d==root || d==node) return;
 
       if(d3.event.altKey){
         return zoom(node.parent);
@@ -229,14 +201,14 @@
     .on("dblclick", function(d) {
       console.log("Double Clicked");
       zoom(d);
-      showDetails(d);
-
+      //showDetails(d);
     });
     //.on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
 
     cell.append("svg:rect")
     .attr("width", function(d) { return d.dx ; })
     .attr("height", function(d) { return d.dy ; })
+    .attr("id",function(d) { return d.path ; } )
     .style("fill", function(d) { return color(d.parent.name); });
 
     cell.append("svg:text")
@@ -264,6 +236,8 @@
     //\Section
 
     zoom(root);
+    showCommitsOntheMap();
+
   }
 
   function size(d) {
@@ -322,22 +296,23 @@
       .attr("width", w/2 - margin)
       .attr("height", h/2 - margin)
       .append("xhtml:body")
+      .append("div")
       .attr("overflow", "scroll");
-
+      
     var panel_src = g.append("rect")
       .attr("x", w/2 + margin)
       .attr("y", 10)
-      .attr("width", w/2 - margin)
-      .attr("height", h - margin)
+      .attr("width", w/2 - margin*2)
+      .attr("height", h - margin*2)
       .attr("style","fill:black;fill-opacity:0.5")
 
     var text_src = g.append("foreignObject")
       .attr("x", w/2 + margin)
       .attr("y","10")
-      .attr("width", w/2 - margin)
-      .attr("height", h - margin)
-      .append("xhtml:body")
-      .attr("overflow", "scroll");
+      .attr("width", w/2 - margin*2)
+      .attr("height", h - margin*2)
+      .append("xhtml:body");
+      //.attr("overflow", "scroll");
 
     var file = new Gh3.File(null, gh3_user, gh3_repo.name, gh3_repo.default_branch);
     file.path = d.path;
@@ -347,10 +322,11 @@
       text_src.append("xhtml:pre")
             //.attr("x", 10)
             .attr("dy", "1.2em")
-            .attr("class","log")
+            //.attr("class","log")
             .style("color", "#00ff00")
             .style("font-size", "5px")
             .text(file.getRawContent());
+            console.log(file);
     });
 
     file.fetchCommits(function (err, res) {
@@ -359,7 +335,8 @@
         text_commits.append("xhtml:p")
             //.attr("x", 10)
             .attr("dy", "1.2em")
-            .attr("class","log")
+            .style("font-size", "15px")
+            //.attr("class","log")
             .style("color", "#00ff00")
             //.attr("width", w/2)
             .text(commit.date +' '+ commit.author.name +' '+ commit.message );
@@ -367,10 +344,6 @@
       });
 
     });
-
-
-
-
   }
 
   function deleteDetails(d){
@@ -378,6 +351,36 @@
   }
 
 
+
+  function showCommitsOntheMap(){
+
+    //read all commits
+    d3.json(api_url+"/commits",function(error, data) {
+        if(error) {
+          console.log(error);
+          return;
+        }
+        //for all commits
+        data.forEach(function(e, idx) {
+          if(idx > 10) return;
+          //read each commit
+          d3.json(e.url,function(error, data) {
+            if(error) {
+              console.log(error);
+              return;
+            }
+            //for single commit
+            data.files.forEach(function(e) {
+              d3.select(escape("#"+e.filename))
+                .transition().duration(700)
+                .style("fill", function(d){return d3.rgb(this.style.fill).brighter(0.5);});
+            });
+          });
+
+        });
+
+    });
+  }
 
   Array.prototype.select = function(closure){
     for(var n = 0; n < this.length; n++) {
@@ -387,6 +390,10 @@
     }
     return null;
   };
+
+  function escape(str) {
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+  }
 
   function parseData(data) {
     var root = {};
