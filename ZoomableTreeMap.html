@@ -27,7 +27,7 @@
         User: <input type="text" id="user" value="inf295uci-2015">
         &nbsp; Repository: <input type="text" id="repo" value="tacoco">
         <input id="updateButton" type="button" value="Update"/>
-        &nbsp; Search file: <input type="text" id="search" value="pom.xml">
+        &nbsp; Search file: <input type="text" id="search" value="">
         <input id="searchButton" type="button" value="Search"/>
         <input id="zoomRestoreButton" type="button" value="Restore"/>
         <br>
@@ -90,7 +90,7 @@
   //.attr("transform", "translate(.5,.5)");
 
 
-  var offline = false;
+  var offline = true;
 
   if(offline) {
     d3.selectAll("#updateButton").on("click", getData_offline);
@@ -114,7 +114,7 @@
       return d.name == search_term;
     });
     selected.each(function(d) {
-      return zoom(d); 
+      return zoom(d);
     });
 
   }
@@ -170,7 +170,7 @@
           console.log(error);
           return;
         }
-        
+
         url = url + "/git/trees/"+data.commit.sha+"?recursive=1";
         d3.json(url, function(error, data) {
           if(error) {
@@ -215,17 +215,23 @@
     cell
     .attr("class", "cell")
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-    .on("click", function(d) { 
-      
+    .on("click", function(d) {
+
       if(d==root) return;
 
       if(d3.event.altKey){
-        return zoom(node.parent);  
+        return zoom(node.parent);
       }
-      
+
       while(node != d.parent) d = d.parent;
-      return zoom(d); 
-    });  
+      return zoom(d);
+    })
+    .on("dblclick", function(d) {
+      console.log("Double Clicked");
+      zoom(d);
+      showDetails(d);
+
+    });
     //.on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
 
     cell.append("svg:rect")
@@ -269,7 +275,7 @@
   }
 
   function zoom(d) {
-
+    deleteDetails();
     d3.select("#dir").text(d.path);
 
     var kx = w / d.dx, ky = h / d.dy;
@@ -302,14 +308,14 @@
     var margin = 10;
     var g = svg.append("g")
       .attr("id","detail");
-    
+
     var panel_commits = g.append("rect")
       .attr("x", 10)
       .attr("y", 10)
       .attr("width", w/2 - margin)
       .attr("height", h/2 - margin)
       .attr("style","fill:black;fill-opacity:0.5")
-    
+
     var text_commits = g.append("foreignObject")
       .attr("x","10")
       .attr("y","10")
@@ -324,7 +330,7 @@
       .attr("width", w/2 - margin)
       .attr("height", h - margin)
       .attr("style","fill:black;fill-opacity:0.5")
-    
+
     var text_src = g.append("foreignObject")
       .attr("x", w/2 + margin)
       .attr("y","10")
@@ -335,10 +341,10 @@
 
     var file = new Gh3.File(null, gh3_user, gh3_repo.name, gh3_repo.default_branch);
     file.path = d.path;
-    
+
     file.fetchContent(function (err, res) {
       if(err) { throw "outch ..." }
-      text_src.append("xhtml:pre") 
+      text_src.append("xhtml:pre")
             //.attr("x", 10)
             .attr("dy", "1.2em")
             .attr("class","log")
@@ -346,11 +352,11 @@
             .style("font-size", "5px")
             .text(file.getRawContent());
     });
-    
+
     file.fetchCommits(function (err, res) {
       if(err) { throw "outch ..." }
       file.eachCommit(function (commit) {
-        text_commits.append("xhtml:p") 
+        text_commits.append("xhtml:p")
             //.attr("x", 10)
             .attr("dy", "1.2em")
             .attr("class","log")
@@ -363,7 +369,7 @@
     });
 
 
-  
+
 
   }
 
