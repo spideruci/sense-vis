@@ -1,5 +1,12 @@
 # SeeSoftOnD3
 
+set c_id and c_secret values in line# 47.
+How to get c_id, c_secret:
+1. goto: github - settings - application - developer applications - register new application
+2. put any values on the form and it will produce client_id and client_secret.
+
+
+
 ### Change Log
 
 **038d8875eade281910486cbcbaa261a9f2b89b8d**
