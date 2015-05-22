@@ -9,9 +9,10 @@
   <script src="js/d3-min.js"></script>
 
   <!--Github V3 Wrapper -->
+  <!-- REMOVED! Because It does not support GITHUB AUTH.
   <script src="js/underscore-min.js"></script>
   <script src="js/gh3.min.js"></script>
-
+  -->
   <!--Syntax Highlighter-->
   <script type="text/javascript" src="js/shCore.js"></script>
   <script type="text/javascript" src="js/shBrushJava.js"></script>
@@ -41,6 +42,11 @@
     </body>
 
     <script>
+
+
+    var c_id = '';
+    var c_secret = '';
+    var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
 
     var optArray = [];
     $(function () {
@@ -135,39 +141,35 @@
     });
   }
 
-  var gh3_user;
-  var gh3_repo;
-  var gh3_branch;
   var api_url;
+  var cur_repo;
+  var cur_branch;
   function getData() {
     var user = d3.select("#user").property('value');
     var repo = d3.select("#repo").property('value');
     api_url = 'https://api.github.com/repos/'+user+'/'+repo;
-    
-    gh3_user = new Gh3.User(user);
-    gh3_repo = new Gh3.Repository(repo, gh3_user);
 
-    gh3_repo.fetch(function (err, res) {
-      if(err) { throw "outch ..." }
-        gh3_repo.fetchBranches(function (err, res) {
-          if(err) { throw "outch ..." }
-            gh3_branch = gh3_repo.getBranchByName(gh3_repo.default_branch);
-          d3.json(api_url+"/branches/" + gh3_repo.default_branch, function(error, data) {
-            if(error) {
-              console.log(error);
-              return;
-            }
-            d3.json(api_url+ "/git/trees/"+data.commit.sha+"?recursive=1", function(error, data) {
-              if(error) {
-                console.log(error);
-                return;
-              }
-              var root = parseData(data.tree);
-              update(root);
-            });
-          });
+    d3.json(api_url+"?"+ o_str, function(error, repo) {
+      if(error) { console.log(error); return; }
+      cur_repo = repo;
+
+      d3.json(api_url+"/branches/" + repo.default_branch +"?"+ o_str, function(error, data) {
+        if(error) {
+          console.log(error);
+          return;
+        }
+        cur_branch = data;
+        d3.json(api_url+ "/git/trees/"+data.commit.sha+"?recursive=1&" + o_str, function(error, data) {
+          if(error) {
+            console.log(error);
+            return;
+          }
+          var root = parseData(data.tree);
+          update(root);
         });
+      });
     });
+
   }
 
   function update (data) {
@@ -314,9 +316,35 @@
       .append("xhtml:body");
       //.attr("overflow", "scroll");
 
-    var file = new Gh3.File(null, gh3_user, gh3_repo.name, gh3_repo.default_branch);
-    file.path = d.path;
+    //var file = new Gh3.File(null, gh3_user, gh3_repo.name, gh3_repo.default_branch);
+    //file.path = d.path;
 
+    d3.json(d.url+"?"+o_str,function(err, res) {
+      if(err) { throw "outch ..." }
+      text_src.append("xhtml:pre")
+            //.attr("x", 10)
+            .attr("dy", "1.2em")
+            //.attr("class","log")
+            .style("color", "#00ff00")
+            .style("font-size", "5px")
+            .text(res.content); //BASE64 decoder is needed here.      
+      //console.log(window.atob( unescape(encodeURIComponent(res.content))));
+    });
+    d3.json(api_url+"/commits?path="+encodeURIComponent(d.path)+"&sha="+cur_branch.name+"&"+o_str,function(err, res) {
+      if(err) { throw "outch ..." }
+      res.forEach(function (c) {
+        text_commits.append("xhtml:p")
+            //.attr("x", 10)
+            .attr("dy", "1.2em")
+            .style("font-size", "15px")
+            //.attr("class","log")
+            .style("color", "#00ff00")
+            //.attr("width", w/2)
+            .text(c.commit.committer.date +' '+ c.author.login +' '+ c.commit.message );
+      });
+    });
+
+/*
     file.fetchContent(function (err, res) {
       if(err) { throw "outch ..." }
       text_src.append("xhtml:pre")
@@ -344,6 +372,7 @@
       });
 
     });
+  */
   }
 
   function deleteDetails(d){
@@ -354,17 +383,18 @@
 
   function showCommitsOntheMap(){
 
+    var commits = {};
     //read all commits
-    d3.json(api_url+"/commits",function(error, data) {
+    d3.json(api_url+"/commits?"+o_str,function(error, data) {
         if(error) {
           console.log(error);
           return;
         }
         //for all commits
         data.forEach(function(e, idx) {
-          if(idx > 10) return;
+          if(idx > 5) return;
           //read each commit
-          d3.json(e.url,function(error, data) {
+          d3.json(e.url+"?"+o_str,function(error, data) {
             if(error) {
               console.log(error);
               return;
@@ -374,12 +404,37 @@
               d3.select(escape("#"+e.filename))
                 .transition().duration(700)
                 .style("fill", function(d){return d3.rgb(this.style.fill).brighter(0.5);});
+            //  if(commits[e.filename]==null) commits[e.filename] = 1;
+            //  else commits[e.filename] = commits[e.filename] + 1;
             });
+
+            //console.log(commits);
+            /*
+            for( key in commits) {
+              d3.select(escape("#"+key))
+              .transition().duration(1000)
+              .style("fill", function(d){return d3.rgb(this.style.fill).brighter(commits[key]);});
+            }
+            */
+
           });
 
         });
-
+    //makeItShine(commits);
     });
+  }
+
+  function makeItShine(d){
+
+    console.log(d, Object.keys(d));
+    
+    for(var k in d) {
+      //d3.select(escape("#"+key))
+      //.transition().duration(1000)
+      //.style("fill", function(d){return d3.rgb(this.style.fill).brighter(d[key]);});
+      console.log(k);
+    }
+     
   }
 
   Array.prototype.select = function(closure){
@@ -415,6 +470,7 @@
     }
     return root;
   }
+
 
   </script>
   </html>
