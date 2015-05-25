@@ -53,7 +53,15 @@
 
   var keys = [];
   function onSelect(d) {
-    alert(d.State);
+    var search_term = d.State;
+    console.log(search_term);
+    var node = svg.selectAll(".cell");
+    var selected = node.filter(function (d,i) {
+      return d.name == search_term;
+    });
+    selected.each(function(d) {
+      return zoom(d);
+    });
   }
   var mc = autocomplete(document.getElementById('test'))
     .keys(keys)

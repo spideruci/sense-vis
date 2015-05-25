@@ -34,6 +34,6 @@ How to get c_id, c_secret:
 
 1. Added Double Click Show details functionality.
 
-****
+**f55759ddf3e92a7e97c1b8e84f670bab14e8300f**
 
 1. Added D3 Autocomplete feature. Issue: The dropped down list is opaque.
