@@ -6,7 +6,8 @@
   <script type='text/css' src="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> </script>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <link type="text/css" rel="stylesheet" href="css/seesoft.css"/>
-  <script src="js/d3-min.js"></script>
+  <script type='text/javascript' src="js/d3-min.js"></script>
+  <script type='text/javascript' src="js/d3.autocomplete.js"></script>
 
   <!--Github V3 Wrapper -->
   <!-- REMOVED! Because It does not support GITHUB AUTH.
@@ -35,6 +36,8 @@
       </form>
 
     </div>
+    <br> <br>
+    Better Search: <div id="test" style="width:100%; height:100%;"></div>
     <div> <br> <br> <br> <div>
       <div id="dir"></div>
       <div id="TreemapSpace">
@@ -44,21 +47,37 @@
     <script>
 
 
-    var c_id = '';
-    var c_secret = '';
-    var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
+  var c_id = '';
+  var c_secret = '';
+  var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
 
-    var optArray = [];
-    $(function () {
-      $("#search").autocomplete({
-        source: optArray
-      });
+  var keys = [];
+  function onSelect(d) {
+    var search_term = d.State;
+    console.log(search_term);
+    var node = svg.selectAll(".cell");
+    var selected = node.filter(function (d,i) {
+      return d.name == search_term;
     });
-
-  /*for (var i = 0; i < graph.nodes.length - 1; i++) {
-    optArray.push(graph.nodes[i].name);
+    selected.each(function(d) {
+      return zoom(d);
+    });
   }
-  optArray = optArray.sort();*/
+  var mc = autocomplete(document.getElementById('test'))
+    .keys(keys)
+    .dataField("State")
+    .placeHolder("Search States - Start typing here")
+    .width(960)
+    .height(500)
+    .onSelected(onSelect)
+    .render();
+
+  var optArray = [];
+  $(function () {
+    $("#search").autocomplete({
+      source: optArray
+    });
+  });
 
   var margin = {top: 10, right: 10, bottom: 10, left: 10},
   width = 960 - margin.left - margin.right,
@@ -237,6 +256,16 @@
     }
     //\Section
 
+    // Section: Filling the D3 AutoComplete Array
+    keysArray = [];
+    for(var i=0; i<optArray.length; ++i){
+      var obj = {};
+      obj['State'] = optArray[i];
+      keysArray.push(obj);
+    }
+    mc.keys(keysArray);
+    //\Section
+
     zoom(root);
     showCommitsOntheMap();
 
@@ -300,7 +329,7 @@
       .append("xhtml:body")
       .append("div")
       .attr("overflow", "scroll");
-      
+
     var panel_src = g.append("rect")
       .attr("x", w/2 + margin)
       .attr("y", 10)
@@ -327,7 +356,7 @@
             //.attr("class","log")
             .style("color", "#00ff00")
             .style("font-size", "5px")
-            .text(res.content); //BASE64 decoder is needed here.      
+            .text(res.content); //BASE64 decoder is needed here.
       //console.log(window.atob( unescape(encodeURIComponent(res.content))));
     });
     d3.json(api_url+"/commits?path="+encodeURIComponent(d.path)+"&sha="+cur_branch.name+"&"+o_str,function(err, res) {
@@ -427,14 +456,14 @@
   function makeItShine(d){
 
     console.log(d, Object.keys(d));
-    
+
     for(var k in d) {
       //d3.select(escape("#"+key))
       //.transition().duration(1000)
       //.style("fill", function(d){return d3.rgb(this.style.fill).brighter(d[key]);});
       console.log(k);
     }
-     
+
   }
 
   Array.prototype.select = function(closure){
