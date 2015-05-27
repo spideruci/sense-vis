@@ -19,6 +19,7 @@
   <script type="text/javascript" src="js/shBrushJava.js"></script>
   <link type="text/css" rel="stylesheet" href="css/shCoreEmacs.css"/>
 
+
 </head>
 <body class="body">
   <div class="ui-widget">
@@ -42,13 +43,17 @@
       <div id="dir"></div>
       <div id="TreemapSpace">
       </div>
+      <br>
+      <br>
+      <div id="SeeSoftView">
+      </div>
     </body>
 
     <script>
 
 
-  var c_id = '';
-  var c_secret = '';
+  var c_id = '64101f07b81df4a0a612';
+  var c_secret = 'dc98f8601675f4a88609e7957fa710ec0236fe38';
   var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
 
   var keys = [];
@@ -210,7 +215,7 @@
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
     .on("click", function(d) {
 
-      
+
       if(d3.event.altKey){
         return zoom(node.parent);
       }
@@ -223,6 +228,11 @@
     .on("dblclick", function(d) {
       console.log("Double Clicked");
       zoom(d);
+      displayFile(d, function(str) {
+
+        return atob(str).replace(/\n/g, "<br/>");
+        //return str1.replace(/\t/g, "&nbsp;");
+      });
       //showDetails(d);
     });
     //.on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
@@ -270,6 +280,35 @@
     zoom(root);
     showCommitsOntheMap();
 
+  }
+
+  function displayFile(file, decoder) {
+    d3.selectAll('pre').remove();
+    var codespace = d3.select('#SeeSoftView');
+    //codespace.html('');
+    d3.json(file.url, function(err, data) {
+      if(err) {
+        console.log(err);
+        return;
+      }
+      var coded_source = data.content;
+      var source = decoder(coded_source);
+      console.log(file.name);
+      codespace.append("pre")
+        .text("The program is: ");
+      var lines = source.split("<br/>");
+      var colors = ["red","green","yellow"];
+      for(var line = 0; line<lines.length; ++line){
+        codespace.append("pre")
+          .attr("id",colors[line%3])
+          .text(lines[line])
+          .style("font-family", "Courier")
+          .style("background-color", colors[line%3])
+          .style("margin-top", "2px")
+          .style("margin-bottom", "2px")
+          .style("overflow", "auto");
+      }
+    });
   }
 
   function size(d) {
