@@ -38,7 +38,7 @@
     </div>
     <br> <br>
     Better Search: <div id="test" style="width:100%; height:100%;"></div>
-    <div> <br> <br> <br> <div>
+    <div> <br> <br> <br> </div>
       <div id="dir"></div>
       <div id="TreemapSpace">
       </div>
@@ -47,8 +47,8 @@
     <script>
 
 
-  var c_id = '';
-  var c_secret = '';
+  var c_id = '1a798cd3ef335de5e16b';
+  var c_secret = '67a3a7098a5f9154368db1e5337d59a726f79b36';
   var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
 
   var keys = [];
@@ -210,11 +210,12 @@
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
     .on("click", function(d) {
 
-      if(d==root || d==node) return;
-
+      
       if(d3.event.altKey){
         return zoom(node.parent);
       }
+
+      if(d==root || d==node) return zoom(d);
 
       while(node != d.parent) d = d.parent;
       return zoom(d);
@@ -320,6 +321,9 @@
       .attr("width", w/2 - margin)
       .attr("height", h/2 - margin)
       .attr("style","fill:black;fill-opacity:0.5")
+      .on("click", function(d) {
+        if(d3.event !=null) d3.event.stopPropagation();
+      });
 
     var text_commits = g.append("foreignObject")
       .attr("x","10")
@@ -328,7 +332,11 @@
       .attr("height", h/2 - margin)
       .append("xhtml:body")
       .append("div")
-      .attr("overflow", "scroll");
+      .attr("overflow", "scroll")
+      .on("click", function(d) {
+        if(d3.event !=null) d3.event.stopPropagation();
+
+      });
 
     var panel_src = g.append("rect")
       .attr("x", w/2 + margin)
@@ -336,13 +344,20 @@
       .attr("width", w/2 - margin*2)
       .attr("height", h - margin*2)
       .attr("style","fill:black;fill-opacity:0.5")
+      .on("click", function(d) {
+        if(d3.event !=null) d3.event.stopPropagation();
+
+      });
 
     var text_src = g.append("foreignObject")
       .attr("x", w/2 + margin)
       .attr("y","10")
       .attr("width", w/2 - margin*2)
       .attr("height", h - margin*2)
-      .append("xhtml:body");
+      .append("xhtml:body")
+      .on("click", function(d) {
+        if(d3.event !=null) d3.event.stopPropagation();
+      });
       //.attr("overflow", "scroll");
 
     //var file = new Gh3.File(null, gh3_user, gh3_repo.name, gh3_repo.default_branch);
