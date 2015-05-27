@@ -47,7 +47,7 @@ How to get c_id, c_secret:
 
 1. Colors made lighter allowing <pre> to overflow.
 
-****
+**89056d264be36567e050e6e5793935cd76348a70**
 
 1. On clicking a particular line of the source code in the SeeSoft view, the
 	 user is redirected to the GitHub page of the file with the clicked on like
