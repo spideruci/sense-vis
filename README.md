@@ -38,7 +38,7 @@ How to get c_id, c_secret:
 
 1. Added D3 Autocomplete feature. Issue: The dropped down list is opaque.
 
-****
+**5f808a5cdc97408a63fd9105be197b40032b9016**
 
 1. Added the lines of code as "pre" HTML elements with a background color.
 	 More operations like zooming and redirection on top of this.

@@ -29,6 +29,13 @@
     SyntaxHighlighter.HighlightAll('code');
     //SyntaxHighlighter.all();
   </script>
+  
+  <style>
+	pre {
+		white-space: pre-wrap;       /* CSS 3 */
+		word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	}
+  </style>
 
 
 </head>
@@ -325,7 +332,8 @@
       codespace.append("pre")
         .text("The program is: ");
       var lines = source.split("<br/>");
-      var colors = ["red","green","yellow"];
+	  
+      var colors = ["#F7C6C6","#E0F5C4","#EDE9B2"];
       for(var line = 0; line<lines.length; ++line){
         codespace.append("pre")
           .attr("id",colors[line%3])
@@ -333,8 +341,8 @@
           .style("font-family", "Courier")
           .style("background-color", colors[line%3])
           .style("margin-top", "2px")
-          .style("margin-bottom", "2px")
-          .style("overflow", "auto");
+          .style("margin-bottom", "2px");
+          //.style("overflow", "auto");
       }
     });
   }
