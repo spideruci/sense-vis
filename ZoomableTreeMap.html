@@ -19,9 +19,9 @@
   <script type="text/javascript" src="js/shBrushJava.js"></script>
   <script type="text/javascript" src="js/shBrushJScript.js"></script>
   <script type="text/javascript" src="js/shAutoloader.js"></script>
-  
+
   <link type="text/css" rel="stylesheet" href="css/shCore.css"/>
-  <link type="text/css" rel="Stylesheet" href="../styles/shThemeDefault.css" /> 
+  <link type="text/css" rel="Stylesheet" href="../styles/shThemeDefault.css" />
 
 
   <script type="text/javascript">
@@ -29,7 +29,7 @@
     SyntaxHighlighter.HighlightAll('code');
     //SyntaxHighlighter.all();
   </script>
-  
+
   <style>
 	pre {
 		white-space: pre-wrap;       /* CSS 3 */
@@ -67,9 +67,9 @@
       <div id="SeeSoftView">
       </div>
 
-      <!-- For testing the SyntaxHighlighter-->  
+      <!-- For testing the SyntaxHighlighter-->
       <pre name="code">
-        &lt;p&gt; This is to test Highlight.&lt;p&gt;       
+        &lt;p&gt; This is to test Highlight.&lt;p&gt;
       </pre>
 
       <p>
@@ -318,9 +318,13 @@
   }
 
   function displayFile(file, decoder) {
+    var user = d3.select("#user").property('value');
+    var repo = d3.select("#repo").property('value');
+    var fileURL = "https://github.com/"+user+'/'+repo+"/blob/master/"+file.path;
+    console.log(fileURL);
+
     d3.selectAll('pre').remove();
     var codespace = d3.select('#SeeSoftView');
-    //codespace.html('');
     d3.json(file.url, function(err, data) {
       if(err) {
         console.log(err);
@@ -332,18 +336,33 @@
       codespace.append("pre")
         .text("The program is: ");
       var lines = source.split("<br/>");
-	  
+
       var colors = ["#F7C6C6","#E0F5C4","#EDE9B2"];
       for(var line = 0; line<lines.length; ++line){
         codespace.append("pre")
-          .attr("id",colors[line%3])
+          .attr("id",line)
           .text(lines[line])
           .style("font-family", "Courier")
           .style("background-color", colors[line%3])
           .style("margin-top", "2px")
           .style("margin-bottom", "2px");
+
           //.style("overflow", "auto");
       }
+      var allPre = codespace.selectAll('pre')
+        .on("click", function(d,i) {
+          var outURL = fileURL + '#L' + i.toString();
+          console.log(outURL);
+          window.open(outURL);
+          /*console.log("Double Clicked");
+          zoom(d);
+          displayFile(d, function(str) {
+
+            return atob(str).replace(/\n/g, "<br/>");
+            //return str1.replace(/\t/g, "&nbsp;");
+          });*/
+          //showDetails(d);
+        });;
     });
   }
 
@@ -591,6 +610,6 @@
   }
   </script>
 
-  
+
 
   </html>

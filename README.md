@@ -42,3 +42,13 @@ How to get c_id, c_secret:
 
 1. Added the lines of code as "pre" HTML elements with a background color.
 	 More operations like zooming and redirection on top of this.
+
+**248d12bd63564582180c0a10a2bdc9765a589aa1**
+
+1. Colors made lighter allowing <pre> to overflow.
+
+****
+
+1. On clicking a particular line of the source code in the SeeSoft view, the
+	 user is redirected to the GitHub page of the file with the clicked on like
+	 highlighted.
