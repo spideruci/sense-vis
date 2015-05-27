@@ -29,21 +29,18 @@
     SyntaxHighlighter.HighlightAll('code');
     //SyntaxHighlighter.all();
   </script>
-  
+
   <style>
 	pre {
 		white-space: pre-wrap;       /* CSS 3 */
 		word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	}
   </style>
-  
+
 </head>
 
 <body class="body">
   <div class="ui-widget">
-   <!--<input id="search">
-    <button type="button" onclick="searchNode()">Search</button>
-    <div id="Formspace">-->
       <form>
         User: <input type="text" id="user" value="inf295uci-2015">
         &nbsp; Repository: <input type="text" id="repo" value="tacoco">
@@ -58,12 +55,22 @@
     <br> <br>
     Better Search: <div id="test" style="width:100%; height:100%;"></div>
     <div> <br> <br> <br> </div>
-      <div id="dir"></div>
-      <div id="TreemapSpace">
-      </div>
+    <div id="dir"></div>
+    <div id="TreemapSpace">
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="ZoomButtons">
+      <input id="seeSoftIn" type="button" value="+"/>
+      <input id="seeSoftOut" type="button" value="-"/>
       <br>
-      <br>
+    </div>
       <div id="SeeSoftView">
+
       </div>
 
       <!-- For testing the SyntaxHighlighter-->
@@ -164,7 +171,29 @@
   }
 
   d3.selectAll("#searchButton").on("click", searchFile);
+  d3.selectAll("#seeSoftIn").on("click", seeSoftIn);
+  d3.selectAll("#seeSoftOut").on("click", seeSoftOut);
   //d3.selectAll("#zoomRestoreButton").on("click", zoomOut);
+
+  function seeSoftIn() {
+    console.log("In");
+    var codespace = d3.select('#SeeSoftView');
+    var allPre = codespace.selectAll('pre');
+    /*allPre.each(function(d) {
+      d.style("font-size","34px");
+    });*/
+    console.log(allPre);
+    allPre.style("font-size","34px");
+
+  }
+
+  function seeSoftOut() {
+    console.log("Out");
+    var codespace = d3.select('#SeeSoftView');
+    var allPre = codespace.selectAll('pre');
+    allPre.style("font-size","6px");
+  }
+
 
   function zoomOut() {
     zoom(root);
@@ -344,8 +373,8 @@
           .text(lines[line])
           .style("font-family", "Courier")
           .style("background-color", colors[line%3])
-          .style("margin-top", "2px")
-          .style("margin-bottom", "2px")
+          .style("margin-top", "0px")
+          .style("margin-bottom", "0px")
           .style("overflow", "auto");
       }
 
@@ -362,9 +391,9 @@
           //.style("background-color", colors[line%3])
           .style("margin-top", "2px")
           .style("margin-bottom", "2px")
-          .style("overflow", "auto");       
+          .style("overflow", "auto");
       }*/
-    
+
 
       var allPre = codespace.selectAll('pre')
         .on("click", function(d,i) {

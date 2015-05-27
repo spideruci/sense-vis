@@ -52,3 +52,8 @@ How to get c_id, c_secret:
 1. On clicking a particular line of the source code in the SeeSoft view, the
 	 user is redirected to the GitHub page of the file with the clicked on like
 	 highlighted.
+
+****
+
+1. On clicking the "+" or "-" above the SeeSoft View, one can zoom in and out
+   accordingly. The next step is to be able to zoom in and out using a slider.
