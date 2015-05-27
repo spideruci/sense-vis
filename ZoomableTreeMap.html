@@ -30,6 +30,17 @@
     //SyntaxHighlighter.all();
   </script>
 
+<<<<<<< HEAD
+=======
+  <style>
+	pre {
+		white-space: pre-wrap;       /* CSS 3 */
+		word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	}
+  </style>
+
+
+>>>>>>> origin/master
 </head>
 
 <body class="body">
@@ -329,7 +340,6 @@
         .text("The program is: ");
       var lines = source.split("<br/>");
 
-       //<pre class="brush:plain ;highlight: [1,3]">
       /*var colors = ["red","green","yellow"];
       var colors = ["#F7C6C6","#E0F5C4","#EDE9B2"];
       for(var line = 0; line<lines.length; ++line){
@@ -342,7 +352,6 @@
           .style("margin-bottom", "2px")
           .style("overflow", "auto");
       }*/
-      //</pre>
 
       for(var line = 0; line<lines.length; ++line){
         var codeLine = lines[line];
@@ -360,6 +369,7 @@
           .style("overflow", "auto");       
       }
     
+
       var allPre = codespace.selectAll('pre')
         .on("click", function(d,i) {
           var outURL = fileURL + '#L' + i.toString();
@@ -374,7 +384,6 @@
           });*/
           //showDetails(d);
         });;
->>>>>>> origin/master
     });
   }
 
