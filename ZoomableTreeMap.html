@@ -62,7 +62,7 @@
     <div id="ZoomButtons">
       <!--<input id="seeSoftIn" type="button" value="+"/>
       <input id="seeSoftOut" type="button" value="-"/>-->
-      <h3> Zoom - <input type="range" id="zoomSlider" name="points" value = 18 min="1" max="18" onchange="threshold(this.value)"> + </h3>
+      <h3> Zoom - <input type="range" id="zoomSlider" name="points" value = 4 min="1" max="18" onchange="seeSoftZoom(this.value)"> + </h3>
       <br>
     </div>
       <div id="SeeSoftView">
@@ -171,23 +171,14 @@
   //d3.selectAll("#seeSoftOut").on("click", seeSoftOut);
   //d3.selectAll("#zoomRestoreButton").on("click", zoomOut);
 
-  function threshold(thresh) {
+  function seeSoftZoom(thresh) {
     console.log("In");
     var codespace = d3.select('#SeeSoftView');
     var allPre = codespace.selectAll('pre');
-    /*allPre.each(function(d) {
-      d.style("font-size","34px");
-    });*/
     console.log(thresh);
     var newFontSize = thresh.toString() +"px";
     console.log(newFontSize);
     allPre.style("font-size",newFontSize);
-    /*graph.links.splice(0, graph.links.length);
-
-    for (var i = 0; i < graphRec.links.length; i++) {
-      if (graphRec.links[i].value > thresh) {graph.links.push(graphRec.links[i]);}
-    }
-    restart();*/
   }
 
   function zoomOut() {
@@ -361,12 +352,16 @@
       var lines = source.split("<br/>");
 
       var colors = ["red","green","yellow"];
-      var colors = ["#F7C6C6","#E0F5C4","#EDE9B2"];
+      var colors = ["#F2D8D8","#CCEBCD","#F2F1D5"];
       for(var line = 0; line<lines.length; ++line){
-        codespace.append("pre")
-          .attr("id",line)
+        var lineNo = line+1;
+        var lineId = "L" + lineNo.toString();
+        codespace.append("div")
+          .attr("id",lineId)
+          .append("pre")
           .text(lines[line])
           .style("font-family", "Courier")
+          .style("font-size", "4px")
           .style("background-color", colors[line%3])
           .style("margin-top", "0px")
           .style("margin-bottom", "0px")
@@ -392,18 +387,20 @@
 
       var allPre = codespace.selectAll('pre')
         .on("click", function(d,i) {
+          console.log(d);
+          var lineId = "#L" + i.toString();
+          var codespace = d3.select('#SeeSoftView');
+          var allPre = codespace.selectAll('pre');
+          allPre.style("font-size","18px");
+          $('html, body').animate({
+            scrollTop: $(lineId).offset().top
+          }, 300);
+        })
+        .on("dblclick", function(d,i) {
           var outURL = fileURL + '#L' + i.toString();
           console.log(outURL);
           window.open(outURL);
-          /*console.log("Double Clicked");
-          zoom(d);
-          displayFile(d, function(str) {
-
-            return atob(str).replace(/\n/g, "<br/>");
-            //return str1.replace(/\t/g, "&nbsp;");
-          });*/
-          //showDetails(d);
-        });;
+        });
     });
   }
 
