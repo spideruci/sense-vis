@@ -45,7 +45,7 @@ How to get c_id, c_secret:
 
 **248d12bd63564582180c0a10a2bdc9765a589aa1**
 
-1. Colors made lighter allowing <pre> to overflow.
+1. Colors made lighter allowing "pre" section to overflow.
 
 **89056d264be36567e050e6e5793935cd76348a70**
 
@@ -58,6 +58,6 @@ How to get c_id, c_secret:
 1. On clicking the "+" or "-" above the SeeSoft View, one can zoom in and out
    accordingly. The next step is to be able to zoom in and out using a slider.
 
-****
+**38f1b884f343ae6514ee07e8163382bab90a300b**
 
 1. Implemented a range slider to zoom in an out of the SeeSoft view better.
