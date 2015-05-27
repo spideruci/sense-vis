@@ -53,7 +53,11 @@ How to get c_id, c_secret:
 	 user is redirected to the GitHub page of the file with the clicked on like
 	 highlighted.
 
-****
+**f846cd1f1095bdde3e1e10f6aa1ee39019fc7699**
 
 1. On clicking the "+" or "-" above the SeeSoft View, one can zoom in and out
    accordingly. The next step is to be able to zoom in and out using a slider.
+
+****
+
+1. Implemented a range slider to zoom in an out of the SeeSoft view better.

@@ -59,14 +59,10 @@
     <div id="TreemapSpace">
     </div>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <div id="ZoomButtons">
-      <input id="seeSoftIn" type="button" value="+"/>
-      <input id="seeSoftOut" type="button" value="-"/>
+      <!--<input id="seeSoftIn" type="button" value="+"/>
+      <input id="seeSoftOut" type="button" value="-"/>-->
+      <h3> Zoom - <input type="range" id="zoomSlider" name="points" value = 18 min="1" max="18" onchange="threshold(this.value)"> + </h3>
       <br>
     </div>
       <div id="SeeSoftView">
@@ -171,29 +167,28 @@
   }
 
   d3.selectAll("#searchButton").on("click", searchFile);
-  d3.selectAll("#seeSoftIn").on("click", seeSoftIn);
-  d3.selectAll("#seeSoftOut").on("click", seeSoftOut);
+  //d3.selectAll("#seeSoftIn").on("click", seeSoftIn);
+  //d3.selectAll("#seeSoftOut").on("click", seeSoftOut);
   //d3.selectAll("#zoomRestoreButton").on("click", zoomOut);
 
-  function seeSoftIn() {
+  function threshold(thresh) {
     console.log("In");
     var codespace = d3.select('#SeeSoftView');
     var allPre = codespace.selectAll('pre');
     /*allPre.each(function(d) {
       d.style("font-size","34px");
     });*/
-    console.log(allPre);
-    allPre.style("font-size","34px");
+    console.log(thresh);
+    var newFontSize = thresh.toString() +"px";
+    console.log(newFontSize);
+    allPre.style("font-size",newFontSize);
+    /*graph.links.splice(0, graph.links.length);
 
+    for (var i = 0; i < graphRec.links.length; i++) {
+      if (graphRec.links[i].value > thresh) {graph.links.push(graphRec.links[i]);}
+    }
+    restart();*/
   }
-
-  function seeSoftOut() {
-    console.log("Out");
-    var codespace = d3.select('#SeeSoftView');
-    var allPre = codespace.selectAll('pre');
-    allPre.style("font-size","6px");
-  }
-
 
   function zoomOut() {
     zoom(root);
