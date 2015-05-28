@@ -32,35 +32,32 @@ How to get c_id, c_secret:
 
 **17b9d98a39517ff144f891e249462899f213de4a**
 
-1. Added Double Click Show details functionality.
+Added Double Click Show details functionality.
 
 **f55759ddf3e92a7e97c1b8e84f670bab14e8300f**
 
-1. Added D3 Autocomplete feature. Issue: The dropped down list is opaque.
+Added D3 Autocomplete feature. Issue: The dropped down list is opaque.
 
 **5f808a5cdc97408a63fd9105be197b40032b9016**
 
-1. Added the lines of code as "pre" HTML elements with a background color.
+Added the lines of code as "pre" HTML elements with a background color.
 	 More operations like zooming and redirection on top of this.
 
 **248d12bd63564582180c0a10a2bdc9765a589aa1**
 
-1. Colors made lighter allowing "pre" section to overflow.
+Colors made lighter allowing "pre" section to overflow.
 
 **89056d264be36567e050e6e5793935cd76348a70**
 
-1. On clicking a particular line of the source code in the SeeSoft view, the
-	 user is redirected to the GitHub page of the file with the clicked on like
-	 highlighted.
+On clicking a particular line of the source code in the SeeSoft view, the user is redirected to the GitHub page of the file with the clicked on like highlighted.
 
 **f846cd1f1095bdde3e1e10f6aa1ee39019fc7699**
 
-1. On clicking the "+" or "-" above the SeeSoft View, one can zoom in and out
-   accordingly. The next step is to be able to zoom in and out using a slider.
+On clicking the "+" or "-" above the SeeSoft View, one can zoom in and out accordingly. The next step is to be able to zoom in and out using a slider.
 
 **38f1b884f343ae6514ee07e8163382bab90a300b**
 
-1. Implemented a range slider to zoom in an out of the SeeSoft view better.
+Implemented a range slider to zoom in an out of the SeeSoft view better.
 
 **f9200db0495b7c2429bcea2d03fd23f9ddfce76b**
 
@@ -75,6 +72,6 @@ How to get c_id, c_secret:
 Added bootstrap.css to make it look better. Will later use the sections to
 make it appear more organized later.
 
-****
+**bfd7d83ade2985806467aa7e12eb02855740ff75**
 
 Fixed the autoscrolling on the click listener on every "pre" object.
