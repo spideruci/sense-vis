@@ -70,7 +70,11 @@ How to get c_id, c_secret:
    the source code.
 2. Made colors a bit lighter.
 
-**
+**ff9b221794fca9b44095e8ca1f95d9d9777eb60c**
 
 Added bootstrap.css to make it look better. Will later use the sections to
 make it appear more organized later.
+
+****
+
+Fixed the autoscrolling on the click listener on every "pre" object.

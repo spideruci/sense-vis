@@ -94,7 +94,7 @@
   var c_id = '';
   var c_secret = '';
   var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
-
+  var displayCounter = 0;
   var keys = [];
   function onSelect(d) {
     var search_term = d.State;
@@ -334,6 +334,7 @@
   }
 
   function displayFile(file, decoder) {
+    displayCounter++;
     var user = d3.select("#user").property('value');
     var repo = d3.select("#repo").property('value');
     var fileURL = "https://github.com/"+user+'/'+repo+"/blob/master/"+file.path;
@@ -357,7 +358,7 @@
       var colors = ["#F2D8D8","#CCEBCD","#F2F1D5"];
       for(var line = 0; line<lines.length; ++line){
         var lineNo = line+1;
-        var lineId = "L" + lineNo.toString();
+        var lineId = "L" + displayCounter.toString() + '_'+ lineNo.toString();
         codespace.append("div")
           .attr("id",lineId)
           .append("pre")
@@ -390,7 +391,7 @@
       var allPre = codespace.selectAll('pre')
         .on("click", function(d,i) {
           console.log(d);
-          var lineId = "#L" + i.toString();
+          var lineId = "#L" + displayCounter.toString()  + '_'+ i.toString();
           var codespace = d3.select('#SeeSoftView');
           var allPre = codespace.selectAll('pre');
           allPre.style("font-size","18px");
