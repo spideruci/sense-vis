@@ -62,10 +62,15 @@ How to get c_id, c_secret:
 
 1. Implemented a range slider to zoom in an out of the SeeSoft view better.
 
-** **
+**f9200db0495b7c2429bcea2d03fd23f9ddfce76b**
 
 1. On clicking any colored rectangle, the SeeSoft is zoomed in and the page is
    scrolled down the exact line number that was clicked. On double clicking the
    line, a new window with a link to the highlighted line of the GitHub page of
    the source code.
 2. Made colors a bit lighter.
+
+**
+
+Added bootstrap.css to make it look better. Will later use the sections to
+make it appear more organized later.
