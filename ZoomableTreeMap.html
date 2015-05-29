@@ -113,7 +113,12 @@
       return d.name == search_term;
     });
     selected.each(function(d) {
-      return zoom(d);
+      zoom(d);
+      displayFile(d, function(str) {
+
+        return atob(str).replace(/\n/g, "<br/>");
+        //return str1.replace(/\t/g, "&nbsp;");
+      });
     });
   }
   var mc = autocomplete(document.getElementById('test'))
@@ -207,7 +212,12 @@
       return d.name == search_term;
     });
     selected.each(function(d) {
-      return zoom(d);
+      zoom(d);
+      displayFile(d, function(str) {
+
+        return atob(str).replace(/\n/g, "<br/>");
+        //return str1.replace(/\t/g, "&nbsp;");
+      });
     });
 
   }

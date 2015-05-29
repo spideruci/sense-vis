@@ -74,12 +74,16 @@ make it appear more organized later.
 
 **bfd7d83ade2985806467aa7e12eb02855740ff75**
 
-Fixed the autoscrolling on the click listener on every "pre" object.
+Fixed the auto-scrolling on the click listener on every "pre" object.
 
 **3485663162717f677f2b85e6015afc13065676bb**
 
 Varied column size with the zoom.
 
-**The next one**
+**d82a51f1df2d87559c607f680b552e30bc9c971c**
 
 Beautifying with Bootstrap classes and HTML.
+
+**The next one**
+
+Fixed the search function to hook on to the SeeSoft view.
