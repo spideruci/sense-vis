@@ -11,6 +11,19 @@ How to get c_id, c_secret:
 
 - Zoom in: mouse click, Zoom out: alt + mouse click
 
+### Testing
+
+- The javascript code in this project is tested using the BDD testing framework, [Jasmine](http://jasmine.github.io/)[v2.3.4](https://github.com/jasmine/jasmine/releases).
+- The Jasmin library, its dependencies, and the actual test runner (SpecRunner.html) is included in the tests directory.
+- The tests/spec folder contains the actual tests, written in javascript.
+- Writing/adding more javascript tests
+    + You *do not* have to download the library. That is already done for *this* project.
+    + You can add more tests (written in JS) in tests/spec
+    + Declare your cod-under-test and the spec inside SpecRunner.html, i.e. the test-runner.
+    + Here are some awesome links to learn more about Jasmine:
+        * Official Introduction: http://jasmine.github.io/2.3/introduction.html
+        * A Hello World Tutorial for Jasmine: http://evanhahn.com/how-do-i-jasmine/
+
 ### Change Log
 
 **038d8875eade281910486cbcbaa261a9f2b89b8d**
