@@ -19,7 +19,7 @@ TarantulaData.prototype.getLineSusupiciousness = function(absoluteSourceFileName
   return lineSusupiciousness;
 };
 
-TarantulaData.prototype.getSusupiciousness = function(absoluteSourceFileName) {
+TarantulaData.prototype.getSusupiciousnessArray = function(absoluteSourceFileName) {
   var lineSusupiciousness = [-1.0];
   return lineSusupiciousness;
 };
