@@ -76,6 +76,10 @@ make it appear more organized later.
 
 Fixed the autoscrolling on the click listener on every "pre" object.
 
-**The one after that**
+**3485663162717f677f2b85e6015afc13065676bb**
 
 Varied column size with the zoom.
+
+**The next one**
+
+Beautifying with Bootstrap classes and HTML.

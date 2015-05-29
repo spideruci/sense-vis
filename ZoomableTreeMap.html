@@ -42,25 +42,34 @@
 </head>
 
 <body class="body">
-  <div class="ui-widget">
-      <form>
-        User: <input type="text" id="user" value="inf295uci-2015">
-        &nbsp; Repository: <input type="text" id="repo" value="tacoco">
-        <input id="updateButton" type="button" value="Update"/>
-        &nbsp; Search file: <input type="text" id="search" value="">
-        <input id="searchButton" type="button" value="Search"/>
-        <input id="zoomRestoreButton" type="button" value="Restore"/>
-        <br>
-      </form>
 
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <h3>INF295UCI-2015</h3>
+      <div class="ui-widget">
+        <form>
+          User: <input type="text" id="user" value="inf295uci-2015">
+          &nbsp; Repository: <input type="text" id="repo" value="tacoco">
+          <input id="updateButton" type="button" value="Update"/>
+
+          <input id="zoomRestoreButton" type="button" value="Restore"/>
+          <br>
+        </form>
+        Better Search: <span id="test" style="width:10%,height:100%;"></span>
+        Search file: <input type="text" id="search" value="">
+        <input id="searchButton" type="button" value="Search"/>
+      </div>
     </div>
-    <br> <br>
-    Better Search: <div id="test" style="width:100%; height:100%;"></div>
-    <div> <br> <br> <br> </div>
-    <div id="dir"></div>
-    <div id="TreemapSpace">
+  </nav>
+
+  <div class="container">
+    <div class="row"> <div class="col-md-12"><br> <br> <br> <br> <br> <br> <br> </div> </div>
+    <div class="row"><div id="dir"></div></div>
+    <div class="row"><div id="TreemapSpace"></div>
     </div>
     <br>
+  </div>
+
     <div id="ZoomButtons">
       <!--<input id="seeSoftIn" type="button" value="+"/>
       <input id="seeSoftOut" type="button" value="-"/>-->
@@ -110,7 +119,7 @@
   var mc = autocomplete(document.getElementById('test'))
     .keys(keys)
     .dataField("State")
-    .placeHolder("Search States - Start typing here")
+    .placeHolder("Search files")
     .width(960)
     .height(500)
     .onSelected(onSelect)
@@ -169,16 +178,11 @@
   }
 
   d3.selectAll("#searchButton").on("click", searchFile);
-  //d3.selectAll("#seeSoftIn").on("click", seeSoftIn);
-  //d3.selectAll("#seeSoftOut").on("click", seeSoftOut);
   //d3.selectAll("#zoomRestoreButton").on("click", zoomOut);
 
   function seeSoftZoom(thresh) {
-    console.log("In");
     var colSize = Math.floor((thresh-1)/4);
     colSize = (colSize+1) * 3;
-    console.log(thresh);
-    console.log(colSize);
     var colClass = "col-md-" + colSize.toString();
     var fileSelectID = '#File'+displayCounter.toString();
     var codespaceOuter = d3.select('#SeeSoftView');
