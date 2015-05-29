@@ -75,3 +75,7 @@ make it appear more organized later.
 **bfd7d83ade2985806467aa7e12eb02855740ff75**
 
 Fixed the autoscrolling on the click listener on every "pre" object.
+
+**The one after that**
+
+Varied column size with the zoom.
