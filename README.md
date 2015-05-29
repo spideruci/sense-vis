@@ -23,6 +23,7 @@ How to get c_id, c_secret:
     + Here are some awesome links to learn more about Jasmine:
         * Official Introduction: http://jasmine.github.io/2.3/introduction.html
         * A Hello World Tutorial for Jasmine: http://evanhahn.com/how-do-i-jasmine/
+    + To run your tests, just open SpecRunner.html in your browser (works on Firefox). 
 
 ### Change Log
 

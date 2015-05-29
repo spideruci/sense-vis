@@ -1,4 +1,4 @@
-describe("trantula-data-api", function() {
+describe("trantula-data-api is behaving sanely", function() {
 
   var tarantula_data;
 
@@ -38,4 +38,21 @@ describe("trantula-data-api", function() {
     expect(array.length).not.toBe(0);
     expect(isArrayResult).toBe('an actual array');
   });
+
+  it("First Line is a defined non-null number", function() {
+    var fLine = tarantula_data.getFirstLine(null);
+    var fLine_type = typeof fLine;
+    expect(fLine).not.toBe(null);
+    expect(fLine).not.toBe(undefined);
+    expect(fLine_type).toEqual('number');
+  });
+
+  it("Last Line is a defined non-null number", function() {
+    var lLine = tarantula_data.getLastLine(null);
+    var lLine_type = typeof lLine;
+    expect(lLine).not.toBe(null);
+    expect(lLine).not.toBe(undefined);
+    expect(lLine_type).toEqual('number');
+  });
+
 });
