@@ -309,15 +309,21 @@
       //showDetails(d);
     });
     //.on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
-
+    var filesToNumbers = {};
     var gradient = cell.append("svg:defs")
       .append("svg:radialGradient")
       //.attr("id", "grad")
-      .attr("id", function(d,i) { return "grad" + i.toString() ; })
+      .attr("id", function(d,i) {
+        filesToNumbers[d.path] = i;
+        //var strID = "grad"+d.path;
+        //return strID;})
+        return "grad" + i.toString() ; })
       .attr("cx","50%")
-      .attr("cy","50%");
+      .attr("cy","50%")
+      .attr("r","10%");
       //.attr("fx","50%")
       //.attr("fy","50%");
+    console.log(filesToNumbers);
 
     gradient.append("svg:stop")
       .attr("offset","0%")
@@ -337,6 +343,8 @@
     //.attr("fill", "url(#grad)");
     .style("fill", function(d,i) {
       var gradientURL = "url(#grad" + i.toString() + ')';
+      //var gradientURL = "#grad"+d.path;
+      //console.log(d.path);
       return gradientURL;
     });
     //.style("fill", function(d) { return color(d.parent.name); });
@@ -376,7 +384,7 @@
     //\Section
 
     zoom(root);
-    showCommitsOntheMap();
+    showCommitsOntheMap(filesToNumbers);
 
   }
 
@@ -615,7 +623,7 @@
 
 
 
-  function showCommitsOntheMap(){
+  function showCommitsOntheMap(filesToNumbers){
 
     var commits = {};
     //read all commits
@@ -637,7 +645,17 @@
             data.files.forEach(function(e) {
               d3.select(escape("#"+e.filename))
                 .transition().duration(700);
+              //console.log(e.filename);
+              var fileNo = filesToNumbers[e.filename];
+              var radialDef = d3.select("#grad"+fileNo.toString());
+              var currentRadius = radialDef.attr("r");
+              var currentRadiusValue = parseInt(currentRadius);
+              currentRadiusValue *= 1.6;
 
+              var newRadius = currentRadiusValue.toString() + "%";
+              radialDef.attr("r",newRadius);
+              //currentRadius = currentRadius * 1.5
+              //radialDef.attr("r",);//,"2%");
                 //.style("fill", function(d){return d3.rgb(this.style.fill).brighter(0.5);});
             //  if(commits[e.filename]==null) commits[e.filename] = 1;
             //  else commits[e.filename] = commits[e.filename] + 1;

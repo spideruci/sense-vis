@@ -102,7 +102,10 @@ Beautifying with Bootstrap classes and HTML.
 
 Fixed the search function to hook on to the SeeSoft view.
 
-**The next one**
+**b009e88d2085c55e67ccb7dab28e182632f587e6**
 
 Added gradient effect to the TreeMap but had to remove the commit brightener.
 Will make it look neater and incorporate commit information.
+
+**The next one**
+Tied up the radius of the bright spot with the number of commits.
