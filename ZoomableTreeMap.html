@@ -302,21 +302,14 @@
       console.log("Double Clicked");
       zoom(d);
       displayFile(d, function(str) {
-
         return atob(str).replace(/\n/g, "<br/>");
-        //return str1.replace(/\t/g, "&nbsp;");
       });
-      //showDetails(d);
     });
-    //.on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
     var filesToNumbers = {};
     var gradient = cell.append("svg:defs")
       .append("svg:radialGradient")
-      //.attr("id", "grad")
       .attr("id", function(d,i) {
         filesToNumbers[d.path] = i;
-        //var strID = "grad"+d.path;
-        //return strID;})
         return "grad" + i.toString() ; })
       .attr("cx","50%")
       .attr("cy","50%")
@@ -327,27 +320,24 @@
 
     gradient.append("svg:stop")
       .attr("offset","0%")
-      .attr("stop-color","#ffffff");
-      //.style("stop-opacity","0");
+      .attr("stop-color",function(d) { return color(d.parent.name); });
 
     gradient.append("svg:stop")
-      .attr("offset","100%")
-      //.attr("stop-color","#f821a3");
+      .attr("offset","45%")
+      .attr("stop-color","#ffffff");
+
+    gradient.append("svg:stop")
+      .attr("offset","65%")
       .attr("stop-color",function(d) { return color(d.parent.name); });
-      //.style("stop-opacity","1");
 
     cell.append("svg:rect")
     .attr("width", function(d) { return d.dx ; })
     .attr("height", function(d) { return d.dy ; })
     .attr("id",function(d) { return d.path ; } )
-    //.attr("fill", "url(#grad)");
     .style("fill", function(d,i) {
       var gradientURL = "url(#grad" + i.toString() + ')';
-      //var gradientURL = "#grad"+d.path;
-      //console.log(d.path);
       return gradientURL;
     });
-    //.style("fill", function(d) { return color(d.parent.name); });
 
     cell.append("svg:text")
     .attr("x", function(d) { return d.dx / 2; })
@@ -650,7 +640,7 @@
               var radialDef = d3.select("#grad"+fileNo.toString());
               var currentRadius = radialDef.attr("r");
               var currentRadiusValue = parseInt(currentRadius);
-              currentRadiusValue *= 1.6;
+              currentRadiusValue *= 2;
 
               var newRadius = currentRadiusValue.toString() + "%";
               radialDef.attr("r",newRadius);

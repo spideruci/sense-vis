@@ -107,5 +107,8 @@ Fixed the search function to hook on to the SeeSoft view.
 Added gradient effect to the TreeMap but had to remove the commit brightener.
 Will make it look neater and incorporate commit information.
 
-**The next one**
+**90e7eba9d8a640956d8bb37255148892a056cf1c**
 Tied up the radius of the bright spot with the number of commits.
+
+**The next one**
+Changed the appearance from a bright spot to a bright ring.
