@@ -23,7 +23,7 @@ How to get c_id, c_secret:
     + Here are some awesome links to learn more about Jasmine:
         * Official Introduction: http://jasmine.github.io/2.3/introduction.html
         * A Hello World Tutorial for Jasmine: http://evanhahn.com/how-do-i-jasmine/
-    + To run your tests, just open SpecRunner.html in your browser (works on Firefox). 
+    + To run your tests, just open SpecRunner.html in your browser (works on Firefox).
 
 ### Change Log
 
@@ -98,6 +98,11 @@ Varied column size with the zoom.
 
 Beautifying with Bootstrap classes and HTML.
 
-**The next one**
+**bcedae1dbb1c8ef934f653a68137cb3c2e09834b**
 
 Fixed the search function to hook on to the SeeSoft view.
+
+**The next one**
+
+Added gradient effect to the TreeMap but had to remove the commit brightener.
+Will make it look neater and incorporate commit information.

@@ -310,11 +310,36 @@
     });
     //.on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
 
+    var gradient = cell.append("svg:defs")
+      .append("svg:radialGradient")
+      //.attr("id", "grad")
+      .attr("id", function(d,i) { return "grad" + i.toString() ; })
+      .attr("cx","50%")
+      .attr("cy","50%");
+      //.attr("fx","50%")
+      //.attr("fy","50%");
+
+    gradient.append("svg:stop")
+      .attr("offset","0%")
+      .attr("stop-color","#ffffff");
+      //.style("stop-opacity","0");
+
+    gradient.append("svg:stop")
+      .attr("offset","100%")
+      //.attr("stop-color","#f821a3");
+      .attr("stop-color",function(d) { return color(d.parent.name); });
+      //.style("stop-opacity","1");
+
     cell.append("svg:rect")
     .attr("width", function(d) { return d.dx ; })
     .attr("height", function(d) { return d.dy ; })
     .attr("id",function(d) { return d.path ; } )
-    .style("fill", function(d) { return color(d.parent.name); });
+    //.attr("fill", "url(#grad)");
+    .style("fill", function(d,i) {
+      var gradientURL = "url(#grad" + i.toString() + ')';
+      return gradientURL;
+    });
+    //.style("fill", function(d) { return color(d.parent.name); });
 
     cell.append("svg:text")
     .attr("x", function(d) { return d.dx / 2; })
@@ -611,8 +636,9 @@
             //for single commit
             data.files.forEach(function(e) {
               d3.select(escape("#"+e.filename))
-                .transition().duration(700)
-                .style("fill", function(d){return d3.rgb(this.style.fill).brighter(0.5);});
+                .transition().duration(700);
+
+                //.style("fill", function(d){return d3.rgb(this.style.fill).brighter(0.5);});
             //  if(commits[e.filename]==null) commits[e.filename] = 1;
             //  else commits[e.filename] = commits[e.filename] + 1;
             });
