@@ -110,5 +110,9 @@ Will make it look neater and incorporate commit information.
 **90e7eba9d8a640956d8bb37255148892a056cf1c**
 Tied up the radius of the bright spot with the number of commits.
 
-**The next one**
+**df4bd177179e815a8f359c260b1f6ae8c63cab22**
 Changed the appearance from a bright spot to a bright ring.
+
+**The next one**
+Changed the bight spot to a corner gradient. Also put the TreeMap in the
+"jumbotron" element.

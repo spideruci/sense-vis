@@ -62,12 +62,13 @@
     </div>
   </nav>
 
-  <div class="container">
-    <div class="row"> <div class="col-md-12"><br> <br> <br> <br> <br> <br> <br> </div> </div>
-    <div class="row"><div id="dir"></div></div>
-    <div class="row"><div id="TreemapSpace"></div>
-    </div>
-    <br>
+  <div class="jumbotron" style="background-color:white;">
+        <div class="row"> <div class="col-md-12"><br> <br> <br> <br> <br> <br> <br> </div> </div>
+        <div class="row"><div id="dir"></div></div>
+        <div class="row">
+          <div class="col-md-12 text-center" id="TreemapSpace"></div>
+        </div>
+        <br>
   </div>
 
     <div id="ZoomButtons">
@@ -100,8 +101,8 @@
 
     <script>
 
-  var c_id = '';
-  var c_secret = '';
+  var c_id = '64101f07b81df4a0a612';
+  var c_secret = 'dc98f8601675f4a88609e7957fa710ec0236fe38';
   var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
   var displayCounter = 0;
   var keys = [];
@@ -311,23 +312,23 @@
       .attr("id", function(d,i) {
         filesToNumbers[d.path] = i;
         return "grad" + i.toString() ; })
-      .attr("cx","50%")
-      .attr("cy","50%")
+      .attr("cx","100%")
+      .attr("cy","100%")
       .attr("r","10%");
       //.attr("fx","50%")
       //.attr("fy","50%");
     console.log(filesToNumbers);
 
-    gradient.append("svg:stop")
+    /*gradient.append("svg:stop")
       .attr("offset","0%")
-      .attr("stop-color",function(d) { return color(d.parent.name); });
+      .attr("stop-color",function(d) { return color(d.parent.name); });*/
 
     gradient.append("svg:stop")
-      .attr("offset","45%")
+      .attr("offset","0%")
       .attr("stop-color","#ffffff");
 
     gradient.append("svg:stop")
-      .attr("offset","65%")
+      .attr("offset","70%")
       .attr("stop-color",function(d) { return color(d.parent.name); });
 
     cell.append("svg:rect")
@@ -614,7 +615,7 @@
 
 
   function showCommitsOntheMap(filesToNumbers){
-
+    console.log(filesToNumbers);
     var commits = {};
     //read all commits
     d3.json(api_url+"/commits?"+o_str,function(error, data) {
@@ -635,12 +636,12 @@
             data.files.forEach(function(e) {
               d3.select(escape("#"+e.filename))
                 .transition().duration(700);
-              //console.log(e.filename);
+              console.log(e.filename);
               var fileNo = filesToNumbers[e.filename];
               var radialDef = d3.select("#grad"+fileNo.toString());
               var currentRadius = radialDef.attr("r");
               var currentRadiusValue = parseInt(currentRadius);
-              currentRadiusValue *= 2;
+              currentRadiusValue *= 2.1;
 
               var newRadius = currentRadiusValue.toString() + "%";
               radialDef.attr("r",newRadius);
