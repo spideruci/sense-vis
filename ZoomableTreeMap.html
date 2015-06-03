@@ -75,36 +75,61 @@
     <br>
   </div>
 
-    <div id="ZoomButtons">
-      <!--<input id="seeSoftIn" type="button" value="+"/>
-      <input id="seeSoftOut" type="button" value="-"/>-->
-      <h3> Zoom <input type="range" id="zoomSlider" name="points" value = 4 min="1" max="16" onchange="seeSoftZoom(this.value)"> </h3>
-      <br>
+  <div class="tabbable">
+    <ul id="Tabs" class="nav nav-tabs">
+      <li class="active" id="Tab1">
+        <a class="Tab1" href="#TabContent" data-toggle="tab">1</a>
+      </li>
+      <li id="Tab2">
+        <a class="Tab2" href="#TabContent" data-toggle="tab">2</a>
+      </li>
+    </ul>
+    <div id="TabContent">
     </div>
-      <div id="SeeSoftView" class="row">
-
+    <!--<div id="TabContent" class="tab-content">
+      <div class="tab-pane active" id="empty_tab">
+        <h1>Tab number 1</h1>
       </div>
+      <div class="tab-pane" id="empty_tab2">
+        <h1>Tab number 2</h1>
+      </div>
+    </div>-->
+  </div>
+  <div id="ZoomButtons">
+    <!--<input id="seeSoftIn" type="button" value="+"/>
+    <input id="seeSoftOut" type="button" value="-"/>-->
+    <h3> Zoom <input type="range" id="zoomSlider" name="points" value = 4 min="1" max="16" onchange="seeSoftZoom(this.value)"> </h3>
+    <br>
+  </div>
 
-      <!-- For testing the SyntaxHighlighter-->
-      <pre name="code">
-        &lt;p&gt; This is to test Highlight.&lt;p&gt;
-      </pre>
+  <div id="SeeSoftView" class="row">
 
-      <p>
-      The highlighters below have their brushes loaded dynamically as evident by looking at
-  the <code>&lt;here /></code> of this HTML file.
-      </p>
+  </div>
 
-      <pre class="brush: js" >
-      function foo()
-      {
-      }
-      </pre>
+  </body>
 
-    </body>
+  <script>
+  d3.select(".Tab1").on('click',function(d,i){
+    d3.selectAll("li")
+      .attr("class"," ");
+    d3.select("#Tab1").attr("class","active");
+    d3.select("#TabContent")
+      .html("");
+    d3.select("#TabContent")
+      .append("h1")
+      .text("Tab1");
+  });
+  d3.select(".Tab2").on('click',function(d,i){
+    d3.selectAll("li")
+      .attr("class"," ");
+    d3.select("#Tab2").attr("class","active");
 
-    <script>
-
+    d3.select("#TabContent")
+      .html("");
+    d3.select("#TabContent")
+      .append("h1")
+      .text("Tab2");
+  });
   var c_id = '64101f07b81df4a0a612';
   var c_secret = 'dc98f8601675f4a88609e7957fa710ec0236fe38';
   var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
@@ -388,7 +413,21 @@
     var user = d3.select("#user").property('value');
     var repo = d3.select("#repo").property('value');
     var fileURL = "https://github.com/"+user+'/'+repo+"/blob/master/"+file.path;
+    var fileName = file.path;
+    var tabSelector = d3.select("#Tabs");
+    var contentSelector = d3.select("#TabContent");
+    var contentID = "file_" + fileName;
+    tabSelector.append("li")
+      .append("a")
+      .attr("data-toggle","tab")
+      .attr("href","#"+contentID)
+      .text(fileName);
     console.log(fileURL);
+    contentSelector.append("div")
+      .attr("class","tab-pane")
+      .attr("id",contentID)
+      .append("h1")
+      .text(fileName);
     var fileDivID = "File" + displayCounter.toString();
     //d3.selectAll('pre').remove();
     var codespaceOuter = d3.select('#SeeSoftView');
