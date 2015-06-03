@@ -125,5 +125,8 @@ background black but it doesn't stretch.
 Added Tabs that get appended once every new file is displayed. More Work
 required here.
 
-**The next one**
+**a0a24b5c3e9c03df728b20c153a1286b2d95daed**
 Tabs finally working.
+
+**The next one**
+Minor bug fixes with tabs. Removed the jQuery search.

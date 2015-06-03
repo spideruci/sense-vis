@@ -59,9 +59,9 @@
           <input id="zoomRestoreButton" type="button" value="Restore"/>
           <br>
         </form>
-        Better Search: <span id="test" style="width:10%,height:100%;"></span>
-        Search file: <input type="text" id="search" value="">
-        <input id="searchButton" type="button" value="Search"/>
+        Search: <div id="test" style="width:10%,height:100%;"></div>
+        <!--Search file: <input type="text" id="search" value="">
+        <input id="searchButton" type="button" value="Search"/>-->
       </div>
     </div>
   </nav>
@@ -78,14 +78,13 @@
   <div class="tabbable">
     <ul id="Tabs" class="nav nav-tabs">
       <li class="active" id="Tab1">
-        <a class="Tab1" data-toggle="tab">1</a>
-      </li>
-      <li id="Tab2">
-        <a class="Tab2" data-toggle="tab">2</a>
+        <a class="Tab1" data-toggle="tab">+</a>
       </li>
     </ul>
-    <div id="TabContent" class="row">
-      <h1>Tab1</h1>
+    <div id="TabContentOuter" class="row">
+      <div id="TabContent" class="col-md-12">
+        <h3>Select files to add....</h3>
+      </div>
     </div>
     <!--<div id="TabContent" class="tab-content">
       <div class="tab-pane active" id="empty_tab">
@@ -119,26 +118,13 @@
     d3.select("#TabContent")
       .html("");
     d3.select("#TabContent")
-      .append("h1")
-      .text("Tab1");
-  });
-  d3.select(".Tab2").on('click',function(d,i){
-    d3.selectAll("li")
-      .attr("class"," ");
-    var className = d3.select(this).attr("class");
-    console.log(className);
-    d3.select("#"+className).attr("class","active");
-
-    d3.select("#TabContent")
-      .html("");
-    d3.select("#TabContent")
-      .append("h1")
-      .text("Tab2");
+      .text("Select files to add....");
   });
   var c_id = '';
   var c_secret = '';
   var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
   var displayCounter = 0;
+  var currentFile = 0;
   var keys = [];
   function onSelect(d) {
     var search_term = d.State;
@@ -220,11 +206,11 @@
   d3.selectAll("#searchButton").on("click", searchFile);
   //d3.selectAll("#zoomRestoreButton").on("click", zoomOut);
 
-  function seeSoftZoom(thresh) {
+  function seeSoftZoom(thresh,fileCounter) {
     var colSize = Math.floor((thresh-1)/4);
     colSize = (colSize+1) * 3;
     var colClass = "col-md-" + colSize.toString();
-    var fileSelectID = '#File'+displayCounter.toString();
+    var fileSelectID = '#File'+currentFile.toString();
     var codespaceOuter = d3.select('#SeeSoftView');
     var codespace = codespaceOuter.select(fileSelectID);
     var allPre = codespace.selectAll('pre');
@@ -414,6 +400,7 @@
   }
 
   function displayFileFromTab(file, decoder,fileCounter) {
+    currentFile = fileCounter;
     var user = d3.select("#user").property('value');
     var repo = d3.select("#repo").property('value');
     var fileURL = "https://github.com/"+user+'/'+repo+"/blob/master/"+file.path;
@@ -501,7 +488,8 @@
 
   function displayFile(file, decoder) {
     displayCounter++;
-    fileCounter = displayCounter;
+    var fileCounter = displayCounter;
+    currentFile = fileCounter;
     var user = d3.select("#user").property('value');
     var repo = d3.select("#repo").property('value');
     var fileURL = "https://github.com/"+user+'/'+repo+"/blob/master/"+file.path;
@@ -524,8 +512,8 @@
     d3.select("#TabContent")
       .html("");
     d3.select("#TabContent")
-      .append("h1")
-      .text(contentID);
+      .append("h3")
+      .text(file.path);
 
     d3.select("."+contentID).on('click',function(d,i){
       d3.selectAll("li")
@@ -537,8 +525,8 @@
       d3.select("#TabContent")
         .html("");
       d3.select("#TabContent")
-        .append("h1")
-        .text(className);
+        .append("h3")
+        .text(file.path);
       displayFileFromTab(file,decoder,fileCounter);
     });
 
