@@ -118,6 +118,7 @@
     d3.select("#TabContent")
       .html("");
     d3.select("#TabContent")
+      .append("h3")
       .text("Select files to add....");
   });
   var c_id = '';
@@ -166,6 +167,7 @@
   x = d3.scale.linear().range([0, w]),
   y = d3.scale.linear().range([0, h]),
   color = d3.scale.category20c();
+  console.log(color);
 
   var treemap = d3.layout.treemap()
   .round(false)
@@ -500,13 +502,18 @@
     var contentID = "file" + fileCounter.toString();
     d3.selectAll("li")
       .attr("class"," ");
-    tabSelector.append("li")
+    var listElement = tabSelector.append("li")
       .attr("id",contentID)
       .attr("class","active")
-      .append("a")
-      .attr("data-toggle","tab")
+      .append("a");
+    listElement.attr("data-toggle","tab")
       .attr("class",contentID)
       .text(file.name);
+      //<input id="zoomRestoreButton" type="button" value="Restore"/>
+    listElement.append("input")
+      .attr("id","X"+contentID)
+      .attr("type","button")
+      .attr("value","X");
     console.log(fileURL);
 
     d3.select("#TabContent")
@@ -514,7 +521,18 @@
     d3.select("#TabContent")
       .append("h3")
       .text(file.path);
-
+    d3.select("#X"+contentID).on('click',function(d,i){
+      var className = d3.select(this).attr("id");
+      className = className.substring(1,className.length);
+      d3.select("#"+className).remove();
+      d3.select("#Tab1").attr("class","active");
+      d3.select('#SeeSoftView').html("");
+      d3.select("#TabContent")
+        .html("");
+      d3.select("#TabContent")
+        .append("h3")
+        .text("Select files to add....");
+    });
     d3.select("."+contentID).on('click',function(d,i){
       d3.selectAll("li")
         .attr("class"," ");

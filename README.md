@@ -128,5 +128,8 @@ required here.
 **a0a24b5c3e9c03df728b20c153a1286b2d95daed**
 Tabs finally working.
 
-**The next one**
+**6c2cbaff97c80093f80c6a4448bd2803ca4d2d50**
 Minor bug fixes with tabs. Removed the jQuery search.
+
+**The next one**
+Added the X button to close tabs.
