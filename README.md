@@ -113,6 +113,10 @@ Tied up the radius of the bright spot with the number of commits.
 **df4bd177179e815a8f359c260b1f6ae8c63cab22**
 Changed the appearance from a bright spot to a bright ring.
 
-**The next one**
+**d22d70fd72532e5e2b050b416ff1bf744526d1d3**
 Changed the bight spot to a corner gradient. Also put the TreeMap in the
 "jumbotron" element.
+
+**The Next One**
+Cascading the SeeSoft views. Also removed the margin from the TreeMap. Made the
+background black but it doesn't stretch.
