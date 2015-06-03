@@ -121,6 +121,9 @@ Changed the bight spot to a corner gradient. Also put the TreeMap in the
 Cascading the SeeSoft views. Also removed the margin from the TreeMap. Made the
 background black but it doesn't stretch.
 
-**The next one**
+**cfd006b2aaa993c1859d7f531777b021422773a1**
 Added Tabs that get appended once every new file is displayed. More Work
 required here.
+
+**The next one**
+Tabs finally working.
