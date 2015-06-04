@@ -49,9 +49,9 @@
     padding: 5px 0;
   }
 
-  .syntaxhighlighter { 
-     overflow-y: scroll !important; 
-     overflow-x: hidden !important; 
+  .syntaxhighlighter {
+     overflow-y: scroll !important;
+     overflow-x: hidden !important;
      height: 480px;
   }
   </style>
@@ -64,7 +64,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h3>INF295UCI-2015</h3>
+          <h3>SPIDER SENSE</h3>
         </div>
         <div class="col-md-8">
           <form>
@@ -695,7 +695,12 @@
     node = d;
     if(d3.event !=null) d3.event.stopPropagation();
 
-    if(d.children==null) showDetails(d);
+    if(d.children==null){
+      showDetails(d);
+      displayFile(d, function(str) {
+        return atob(str.replace(/\s/g, '')).replace(/\n/g, "<br/>");
+      });
+    }
     else deleteDetails();
   }
 
@@ -923,7 +928,7 @@
           break;
         }
         current = current.select(function(v){return v.name == step;});
-        if(current.children == null) ++nNode;  
+        if(current.children == null) ++nNode;
         current.children =  current.children || [];
         current = current.children;
       }
