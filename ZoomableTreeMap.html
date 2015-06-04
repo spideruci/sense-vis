@@ -309,8 +309,8 @@
             return;
           }
           var root = parseData(data.tree);
-          console.log(data);
-          setPalette(data.tree.length);
+          //console.log(data);
+          //setPalette(data.tree.length);
           update(root);
         });
       });
@@ -909,6 +909,7 @@
   }
 
   function parseData(data) {
+    var nNode=0;
     var root = {};
     root.children = [];
     for(var i =0; i < data.length;i++){
@@ -922,10 +923,13 @@
           break;
         }
         current = current.select(function(v){return v.name == step;});
+        if(current.children == null) ++nNode;  
         current.children =  current.children || [];
         current = current.children;
       }
     }
+    //console.log(nNode, data.length);
+    setPalette(nNode);
     return root;
   }
   </script>
