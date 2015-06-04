@@ -119,6 +119,8 @@
     d3.select("#TabContent")
       .append("h3")
       .text("Select files to add....");*/
+      if(d3.event !=null) d3.event.stopPropagation();
+
   });
   var c_id = '';
   var c_secret = '';
