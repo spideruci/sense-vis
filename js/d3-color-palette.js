@@ -9,7 +9,7 @@ function colors(N){
 	var hue, lightness;
 
 	// data = [];
-	color = [];
+	var c = [];
 
 	for (var i=0; i < N; i++) {
   
@@ -19,7 +19,7 @@ function colors(N){
   		lightness = lightnessMin + (lightnessMax - lightnessMin) * (1 - Math.exp(-i/lightnessDecay));
 
   		// data.push({h: hue, s: saturation, l: lightness, code: tmp});
-  		color.push(d3.hsl(hue,saturation,lightness));
+  		c.push(d3.hsl(hue,saturation,lightness));
 	}
-	return color;
+	return c;
 }

@@ -8,6 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/seesoft.css"/>
   <script type='text/javascript' src="js/d3-min.js"></script>
   <script type='text/javascript' src="js/d3.autocomplete.js"></script>
+  <script type='text/javascript' src="js/d3-color-palette.js"></script>
   <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
   <!--Github V3 Wrapper -->
   <!-- REMOVED! Because It does not support GITHUB AUTH.
@@ -163,9 +164,24 @@
   var w = width,
   h = height,
   x = d3.scale.linear().range([0, w]),
-  y = d3.scale.linear().range([0, h]),
-  color = d3.scale.category20c();
-  console.log(color);
+  y = d3.scale.linear().range([0, h]);
+  //color = d3.scale.category20c();
+  //console.log(color);
+
+
+  var color_palette;
+  var color_hash = {};
+  function setPalette(num){
+    console.log(num);
+    color_palette = colors(num);
+  }
+  var _next_idx=0;
+  function getColor(key){ 
+    if(key == null) return color_palette[0];
+    if(!(key in color_hash)) color_hash[key] = (_next_idx++)%color_palette.length;
+    return color_palette[color_hash[key]];
+  }
+
 
   var treemap = d3.layout.treemap()
   .round(false)
@@ -283,6 +299,7 @@
             return;
           }
           var root = parseData(data.tree);
+          setPalette(data.tree.length);
           update(root);
         });
       });
@@ -323,7 +340,7 @@
       console.log("Double Clicked");
       zoom(d);
       displayFile(d, function(str) {
-        return atob(str).replace(/\n/g, "<br/>");
+        return atob(str.replace(/\s/g, '')).replace(/\n/g, "<br/>");
       });
     });
     var filesToNumbers = {};
@@ -349,7 +366,7 @@
 
     gradient.append("svg:stop")
       .attr("offset","70%")
-      .attr("stop-color",function(d) { return color(d.parent.name); });
+      .attr("stop-color",function(d) { return getColor(d.parent.name); });
 
     cell.append("svg:rect")
     .attr("width", function(d) { return d.dx ; })
