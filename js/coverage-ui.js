@@ -1,5 +1,6 @@
 var userName = d3.select('#user').property('value');
 var repoName = d3.select('#repo').property('value');
+var spider = {};
 
 var fetcher = new CoverageDataFetcher();
 fetcher.fetch(repoName, function(data) {
@@ -63,7 +64,7 @@ fetcher.fetch(repoName, function(data) {
     }
     styleTestsLiveness(testCaseDivs);
 
-  })
+  });
 
   // dlbclick is test-result
   testCaseDivs.on('dblclick', function(d, i) {
@@ -76,6 +77,8 @@ fetcher.fetch(repoName, function(data) {
     }
     styleTestResults(testCaseDivs);
 
-  })
+  });
+
+  spider.coverage = coverage;
 
 });

@@ -87,6 +87,37 @@ Coverage.prototype.makeTestPass = function(index) {
   this.testsFailness[index] = false;
 };
 
+Coverage.prototype.getPassFailCount = function() {
+  var passCount = 0;
+  var failCount = 0;
+  for(var i = 0; i < this.testCount; i += 1) {
+    var isTestFailing = this.testsFailness[i];
+    if(isTestFailing) {
+      failCount += 1;
+    } else {
+      passCount += 1;
+    }
+  }
+  return [passCount, failCount];
+};
+
+Coverage.prototype.getLivePassFailCount = function() {
+  var passCount = 0;
+  var failCount = 0;
+  for(var i = 0; i < this.testCount; i += 1) {
+    var isTestLive = this.testsLiveness[i];
+    if(!isTestLive) continue;
+    var isTestFailing = this.testsFailness[i];
+    if(isTestFailing) {
+      failCount += 1;
+    } else {
+      passCount += 1;
+    }
+  }
+  return [passCount, failCount];
+};
+
+
 
 Coverage.prototype.getSourceCoverage = function(sourceName) {
   var sourceCoverage = null;
