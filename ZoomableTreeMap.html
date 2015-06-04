@@ -172,7 +172,6 @@
   var color_palette;
   var color_hash = {};
   function setPalette(num){
-    console.log(num);
     color_palette = colors(num);
   }
   var _next_idx=0;
@@ -299,7 +298,8 @@
             return;
           }
           var root = parseData(data.tree);
-          setPalette(data.tree.length);
+          console.log(data);
+          setPalette(data.tree.length);    
           update(root);
         });
       });
@@ -366,7 +366,7 @@
 
     gradient.append("svg:stop")
       .attr("offset","70%")
-      .attr("stop-color",function(d) { return getColor(d.parent.name); });
+      .attr("stop-color",function(d) { return getColor(d.parent.path); });
 
     cell.append("svg:rect")
     .attr("width", function(d) { return d.dx ; })
@@ -744,7 +744,7 @@
 
     d3.json(d.url+"?"+o_str,function(err, res) {
       if(err) { throw "outch ..." }
-        console.log(SyntaxHighlighter.brushes);
+        //console.log(SyntaxHighlighter.brushes);
       var brush = new SyntaxHighlighter.brushes.Java(),
       html;
       brush.init({ toolbar: false });
@@ -752,6 +752,7 @@
       text_src
             //.append("xhtml:pre")
             .append("xhtml:div")
+            .attr("align","left")
             .html(html)
             //.attr("x", 10)
             //.attr("dy", "1.2em")
@@ -765,6 +766,8 @@
       if(err) { throw "outch ..." }
       res.forEach(function (c) {
         text_commits.append("xhtml:p")
+        .attr("align","left")
+            
             //.attr("x", 10)
             .attr("dy", "1.2em")
             .style("font-size", "15px")
@@ -834,7 +837,7 @@
             data.files.forEach(function(e) {
               d3.select(escape("#"+e.filename))
                 .transition().duration(700);
-              console.log(e.filename);
+              //console.log(e.filename);
               var fileNo = filesToNumbers[e.filename];
               var radialDef = d3.select("#grad"+fileNo.toString());
               var currentRadius = radialDef.attr("r");
