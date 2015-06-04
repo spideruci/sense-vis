@@ -1,24 +1,50 @@
+function CoverageDataFetcher() {
+}
+
+CoverageDataFetcher.prototype.fetch = function(projectName, callback) {
+  var url = 'data/' + projectName + '-cov-matrix.json';
+  d3.json(url, function(error, data) {
+      if(error) {
+        data = null;
+      }
+      if(callback != null 
+        && callback != undefined
+        && (callback instanceof Function)) {
+        callback(data);
+      }
+  });
+};
+
 function Coverage(data) {
   this.testsIndex = data.testsIndex;
   this.testCount = data.testCount;
-  this.sources = [];
+  this.sources = new Array();
 
-  data.sources.forEach(function(element) {
+  console.log(data.sources);
+  console.log(this.sources);
+
+  for(var i = 0; i < data.sources.length; i += 1) {
+    var element = data.sources[i];
     if(element === null || element === undefined || element.length === 0) {
       return;
     }
     var sourceCoverage = new SourceCoverage(element);
     this.sources.push(sourceCoverage);
-  });
+  }
 
   this.testsLiveness = [];
   this.testsFailness = [];
 
-  for(var i = 0; i < testCount; i += 1) {
+  for(var i = 0; i < this.testCount; i += 1) {
     this.testsLiveness.push(true);
     this.testsFailness.push(false);
   }
 }
+
+Coverage.prototype.getTestNames = function() {
+  console.log(this.testsIndex.length + 'names')
+  return this.testsIndex;
+};
 
 Coverage.prototype.getTestName = function(index) {
   var testName = this.testsIndex[index];
@@ -128,7 +154,7 @@ SourceCoverage.prototype.isLineCovered = function(lineNumber, testsLiveness) {
   return false;
 };
 
-sourceCoverage.prototype.canExecuteLine = function(lineNumber) {
+SourceCoverage.prototype.canExecuteLine = function(lineNumber) {
   var index = lineNumber - this.fLine;
   if(index < 0) {
     return false;

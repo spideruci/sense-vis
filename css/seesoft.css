@@ -55,3 +55,10 @@ rect {
   margin: auto;
   margin-top: 100px;
 }
+
+.test {
+  margin: 5px;
+  padding: 2px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
