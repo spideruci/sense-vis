@@ -42,7 +42,7 @@
 		white-space: pre-wrap;       /* CSS 3 */
 		word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	}
-  body {
+  .body {
     padding: 140px 0 0;
   }
   .jumbotron {
@@ -716,8 +716,7 @@
       .attr("width", w/2 - margin)
       .attr("height", h/2 - margin)
       .append("xhtml:body")
-      .append("div")
-      .attr("overflow", "scroll")
+      .style("background-color","transparent")
       .on("click", function(d) {
         if(d3.event !=null) d3.event.stopPropagation();
 
@@ -778,7 +777,7 @@
 
             //.attr("x", 10)
             .attr("dy", "1.2em")
-            .style("font-size", "15px")
+            .style("font-size", "12px")
             //.attr("class","log")
             .style("color", "#00ff00")
             //.attr("width", w/2)
