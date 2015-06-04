@@ -42,6 +42,9 @@
 		white-space: pre-wrap;       /* CSS 3 */
 		word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	}
+  body {
+    padding: 140px 0 0;
+  }
   </style>
 
 </head>
@@ -50,17 +53,18 @@
 
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <h3>INF295UCI-2015</h3>
-      <div class="ui-widget">
-        <form>
-          User: <input type="text" id="user" value="inf295uci-2015">
-          Repository: <input type="text" id="repo" value="tacoco">
-          <input id="updateButton" type="button" value="Update"/>
-          <input id="zoomRestoreButton" type="button" value="Restore"/>
-        </form>
-
-        <!--Search file: <input type="text" id="search" value="">
-        <input id="searchButton" type="button" value="Search"/>-->
+      <div class="row">
+        <div class="col-md-4">
+          <h3>INF295UCI-2015</h3>
+        </div>
+        <div class="col-md-8">
+          <form>
+            User: <input type="text" id="user" value="inf295uci-2015">
+            Repository: <input type="text" id="repo" value="tacoco">
+            <input id="updateButton" type="button" value="Update"/>
+            <!--<input id="zoomRestoreButton" type="button" value="Restore"/>-->
+          </form>
+        </div>
       </div>
       <div class="row">
         <div class="col-md-6" id="ZoomButtons">
@@ -77,20 +81,16 @@
             <a class="Tab1" data-toggle="tab">Tree-Map</a>
           </li>
         </ul>
-        <!--<div id="TabContentOuter" class="row">
-          <div id="TabContent" class="col-md-12">
-            <h3>Select files to add....</h3>
-          </div>
-        </div>-->
       </div>
+
     </div>
   </nav>
-  <div class="row"> <div class="col-md-12"><br> <br> <br> <br> <br> <br> <br> </div> </div>
-  <div class="row"><div  class="col-md-12" id="dir"></div></div>
-  <div id="SeeSoftView" class="row">
 
-  </div>
-  <div class="jumbotron" id="TreemapSpaceOuter" style="background:black;">
+
+  <div class="jumbotron">
+  <div class="row"> <div  class="col-md-12" id="dir"></div></div>
+  <div class="row"> <div id="SeeSoftView" class="col-md-12"></div></div>
+  <div id="TreemapSpaceOuter" style="background:black;">
 
     <div class="row">
       <div class="col-md-12 text-center" id="TreemapSpace"></div>
@@ -98,7 +98,7 @@
     <br>
   </div>
 
-
+  </div>
 
 
 
@@ -177,7 +177,7 @@
     color_palette = colors(num);
   }
   var _next_idx=0;
-  function getColor(key){ 
+  function getColor(key){
     if(key == null) return color_palette[0];
     if(!(key in color_hash)) color_hash[key] = (_next_idx++)%color_palette.length;
     return color_palette[color_hash[key]];
@@ -301,7 +301,7 @@
           }
           var root = parseData(data.tree);
           console.log(data);
-          setPalette(data.tree.length);    
+          setPalette(data.tree.length);
           update(root);
         });
       });
@@ -540,6 +540,7 @@
     listElement.append("input")
       .attr("id","X"+contentID)
       .attr("type","button")
+      .attr("class","close")
       .attr("value","X");
     console.log(fileURL);
 
@@ -771,7 +772,7 @@
       res.forEach(function (c) {
         text_commits.append("xhtml:p")
         .attr("align","left")
-            
+
             //.attr("x", 10)
             .attr("dy", "1.2em")
             .style("font-size", "15px")
