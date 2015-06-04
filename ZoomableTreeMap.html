@@ -350,10 +350,20 @@
     .on("dblclick", function(d) {
       console.log("Double Clicked");
       zoom(d);
+      /*displayFile(d, function(str) {
+        return atob(str.replace(/\s/g, '')).replace(/\n/g, "<br/>");
+      });*/
+    })
+    .on("contextmenu", function(d) {
+      console.log("Double Clicked");
+      //zoom(d);
       displayFile(d, function(str) {
         return atob(str.replace(/\s/g, '')).replace(/\n/g, "<br/>");
       });
+      d3.event.preventDefault();
     });
+
+
     var filesToNumbers = {};
     var gradient = cell.append("svg:defs")
       .append("svg:radialGradient")
