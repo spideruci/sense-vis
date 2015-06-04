@@ -530,6 +530,7 @@
       .append("h3")
       .text(file.path);*/
     d3.select("#X"+contentID).on('click',function(d,i){
+      d3.select("#TreemapSpaceOuter").style("display","");
       var className = d3.select(this).attr("id");
       className = className.substring(1,className.length);
       d3.select("."+className).attr("class","defunct");
