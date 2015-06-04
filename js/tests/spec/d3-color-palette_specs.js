@@ -1,4 +1,4 @@
-describe("Color Palette",function () {
+describe("Test colors function of Color Palette",function () {
 	it("should return 10 colors in HSL",function(){
 		var color10 = colors(10);
 		var len = color10.length;
@@ -51,5 +51,21 @@ describe("Color Palette",function () {
 			expect(colorRGB.b).toBeLessThan(256); 
 			expect(colorRGB.b).toBeGreaterThan(-1);
 		};
+	});
+});
+
+
+
+describe("Test colors2 function of Color Palette",function(){
+	it("should return 5 colors ranging from color_array input",function(){
+		var color5 = colors2(5,["red", "white", "green"]);
+		var len = color5.length;
+		expect(len).toEqual(5);
+	});
+
+	it("should return 50 colors ranging from color_array input",function(){
+		var color50 = colors2(50,["red", "yellow", "green"]);
+		var len = color50.length;
+		expect(len).toEqual(50);
 	});
 });

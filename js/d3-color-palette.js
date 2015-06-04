@@ -23,3 +23,18 @@ function colors(N){
 	}
 	return c;
 }
+
+function colors2(N,color_array){
+	var c = [];
+	var n_color = color_array.length;
+	var color_domain = [];
+	for(var i = 0; i < n_color;i++){
+		color_domain.push(i);
+	}
+	var color = d3.scale.linear().domain(color_domain).range(color_array);
+	var len = n_color - 1;
+	for(var i = 0; i < N;i++){
+		c.push(color(i*(len/(N-1))));
+	}
+	return c;
+}
