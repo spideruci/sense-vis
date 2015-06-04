@@ -45,6 +45,9 @@
   body {
     padding: 140px 0 0;
   }
+  .jumbotron {
+    padding: 5px 0;
+  }
   </style>
 
 </head>
@@ -488,9 +491,9 @@
       var allPre = codespace.selectAll('pre')
         .on("click", function(d,i) {
           console.log(d);
-          var lineNo = i-9;
+          var lineNo = i-8;
           if(lineNo<1){
-            var lineId = "#L9";
+            var lineId = "#L8";
           }
           else{
             var lineId = "#L" + fileCounter.toString()  + '_'+ lineNo.toString();
@@ -630,9 +633,9 @@
       var allPre = codespace.selectAll('pre')
         .on("click", function(d,i) {
           console.log(d);
-          var lineNo = i-9;
+          var lineNo = i-8;
           if(lineNo<1){
-            var lineId = "#L9";
+            var lineId = "#L8";
           }
           else{
             var lineId = "#L" + fileCounter.toString()  + '_'+ lineNo.toString();
