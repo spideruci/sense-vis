@@ -134,6 +134,9 @@ Minor bug fixes with tabs. Removed the jQuery search.
 **1be0f184a8af215aa6d97b075c32b1775fce0422**
 Added the X button to close tabs.
 
-**The next one**
+**03b100c438d20706edddaca24051637244d372b1**
 Changed the UI by putting the zoom changer and tab selector on the header.
 The default tab opens to the tree map.
+
+**Latest**
+Moved around UI elements and hid the TreeMap while viewing SeeSoft.

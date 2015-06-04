@@ -49,11 +49,11 @@
 
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <h4>INF295UCI-2015</h4>
+      <h3>INF295UCI-2015</h3>
       <div class="ui-widget">
         <form>
           User: <input type="text" id="user" value="inf295uci-2015">
-          &nbsp; Repository: <input type="text" id="repo" value="tacoco">
+          Repository: <input type="text" id="repo" value="tacoco">
           <input id="updateButton" type="button" value="Update"/>
           <input id="zoomRestoreButton" type="button" value="Restore"/>
         </form>
@@ -62,12 +62,11 @@
         <input id="searchButton" type="button" value="Search"/>-->
       </div>
       <div class="row">
+        <div class="col-md-6" id="ZoomButtons">
+          <input type="range" id="zoomSlider" name="points" value = 4 min="1" max="16" onchange="seeSoftZoom(this.value)">
+        </div>
         <div class="col-md-6">
           <div id="test" style="width:100%,height:100%;"></div>
-        </div>
-        <div class="col-md-6" id="ZoomButtons">
-          <br>
-          <input type="range" id="zoomSlider" name="points" value = 4 min="1" max="16" onchange="seeSoftZoom(this.value)">
         </div>
       </div>
 
@@ -90,8 +89,7 @@
   <div id="SeeSoftView" class="row">
 
   </div>
-  <br><br>
-  <div class="jumbotron" style="background:black;">
+  <div class="jumbotron" id="TreemapSpaceOuter" style="background:black;">
 
     <div class="row">
       <div class="col-md-12 text-center" id="TreemapSpace"></div>
@@ -107,6 +105,8 @@
 
   <script>
   d3.select(".Tab1").on('click',function(d,i){
+    d3.select('#SeeSoftView').html("");
+    d3.select("#TreemapSpaceOuter").style("display","");
     d3.select('#SeeSoftView').html("");
     d3.selectAll("li")
       .attr("class"," ");
@@ -400,6 +400,7 @@
   }
 
   function displayFileFromTab(file, decoder,fileCounter) {
+    d3.select("#TreemapSpaceOuter").style("display","none");
     currentFile = fileCounter;
     var user = d3.select("#user").property('value');
     var repo = d3.select("#repo").property('value');
@@ -495,6 +496,7 @@
   }
 
   function displayFile(file, decoder) {
+    d3.select("#TreemapSpaceOuter").style("display","none");
     displayCounter++;
     var fileCounter = displayCounter;
     currentFile = fileCounter;
