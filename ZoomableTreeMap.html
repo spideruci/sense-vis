@@ -49,77 +49,75 @@
 
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <h3>INF295UCI-2015</h3>
+      <h4>INF295UCI-2015</h4>
       <div class="ui-widget">
         <form>
           User: <input type="text" id="user" value="inf295uci-2015">
           &nbsp; Repository: <input type="text" id="repo" value="tacoco">
           <input id="updateButton" type="button" value="Update"/>
-
           <input id="zoomRestoreButton" type="button" value="Restore"/>
-          <br>
         </form>
-        Search: <div id="test" style="width:10%,height:100%;"></div>
+
         <!--Search file: <input type="text" id="search" value="">
         <input id="searchButton" type="button" value="Search"/>-->
       </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div id="test" style="width:100%,height:100%;"></div>
+        </div>
+        <div class="col-md-6" id="ZoomButtons">
+          <br>
+          <input type="range" id="zoomSlider" name="points" value = 4 min="1" max="16" onchange="seeSoftZoom(this.value)">
+        </div>
+      </div>
+
+      <div class="tabbable">
+        <ul id="Tabs" class="nav nav-tabs">
+          <li class="active" id="Tab1">
+            <a class="Tab1" data-toggle="tab">Tree-Map</a>
+          </li>
+        </ul>
+        <!--<div id="TabContentOuter" class="row">
+          <div id="TabContent" class="col-md-12">
+            <h3>Select files to add....</h3>
+          </div>
+        </div>-->
+      </div>
     </div>
   </nav>
+  <div class="row"> <div class="col-md-12"><br> <br> <br> <br> <br> <br> <br> </div> </div>
+  <div class="row"><div  class="col-md-12" id="dir"></div></div>
+  <div id="SeeSoftView" class="row">
 
+  </div>
+  <br><br>
   <div class="jumbotron" style="background:black;">
-    <div class="row"> <div class="col-md-12"><br> <br> <br> <br> <br> <br> <br> </div> </div>
-    <div class="row"><div id="dir"></div></div>
+
     <div class="row">
       <div class="col-md-12 text-center" id="TreemapSpace"></div>
     </div>
     <br>
   </div>
 
-  <div class="tabbable">
-    <ul id="Tabs" class="nav nav-tabs">
-      <li class="active" id="Tab1">
-        <a class="Tab1" data-toggle="tab">+</a>
-      </li>
-    </ul>
-    <div id="TabContentOuter" class="row">
-      <div id="TabContent" class="col-md-12">
-        <h3>Select files to add....</h3>
-      </div>
-    </div>
-    <!--<div id="TabContent" class="tab-content">
-      <div class="tab-pane active" id="empty_tab">
-        <h1>Tab number 1</h1>
-      </div>
-      <div class="tab-pane" id="empty_tab2">
-        <h1>Tab number 2</h1>
-      </div>
-    </div>-->
-  </div>
-  <div id="ZoomButtons">
-    <!--<input id="seeSoftIn" type="button" value="+"/>
-    <input id="seeSoftOut" type="button" value="-"/>-->
-    <h3> Zoom <input type="range" id="zoomSlider" name="points" value = 4 min="1" max="16" onchange="seeSoftZoom(this.value)"> </h3>
-    <br>
-  </div>
 
-  <div id="SeeSoftView" class="row">
 
-  </div>
+
 
   </body>
 
   <script>
   d3.select(".Tab1").on('click',function(d,i){
+    d3.select('#SeeSoftView').html("");
     d3.selectAll("li")
       .attr("class"," ");
     var className = d3.select(this).attr("class");
     console.log(className);
     d3.select("#"+className).attr("class","active");
-    d3.select("#TabContent")
+    /*d3.select("#TabContent")
       .html("");
     d3.select("#TabContent")
       .append("h3")
-      .text("Select files to add....");
+      .text("Select files to add....");*/
   });
   var c_id = '';
   var c_secret = '';
@@ -470,8 +468,16 @@
       var allPre = codespace.selectAll('pre')
         .on("click", function(d,i) {
           console.log(d);
-          var lineId = "#L" + fileCounter.toString()  + '_'+ i.toString();
+          var lineNo = i-9;
+          if(lineNo<1){
+            var lineId = "#L9";
+          }
+          else{
+            var lineId = "#L" + fileCounter.toString()  + '_'+ lineNo.toString();
+          }
+
           seeSoftZoom(16);
+
           //var codespace = d3.select('#SeeSoftView');
           //var allPre = codespace.selectAll('pre');
           //var slider = d3.select("zoomSlider);
@@ -516,36 +522,30 @@
       .attr("value","X");
     console.log(fileURL);
 
-    d3.select("#TabContent")
+    /*d3.select("#TabContent")
       .html("");
     d3.select("#TabContent")
       .append("h3")
-      .text(file.path);
+      .text(file.path);*/
     d3.select("#X"+contentID).on('click',function(d,i){
       var className = d3.select(this).attr("id");
       className = className.substring(1,className.length);
+      d3.select("."+className).attr("class","defunct");
       d3.select("#"+className).remove();
+      d3.selectAll("li").attr("class"," ");
       d3.select("#Tab1").attr("class","active");
+      console.log("Reached here");
       d3.select('#SeeSoftView').html("");
-      d3.select("#TabContent")
-        .html("");
-      d3.select("#TabContent")
-        .append("h3")
-        .text("Select files to add....");
     });
     d3.select("."+contentID).on('click',function(d,i){
-      d3.selectAll("li")
-        .attr("class"," ");
-      var className = d3.select(this).attr("class");
-      console.log(className);
-      d3.select("#"+className).attr("class","active");
 
-      d3.select("#TabContent")
-        .html("");
-      d3.select("#TabContent")
-        .append("h3")
-        .text(file.path);
-      displayFileFromTab(file,decoder,fileCounter);
+      var className = d3.select(this).attr("class");
+      if(className != "defunct") {
+        console.log(className);
+        d3.selectAll("li").attr("class"," ");
+        d3.select("#"+className).attr("class","active");
+        displayFileFromTab(file,decoder,fileCounter);
+      }
     });
 
     var fileDivID = "File" + fileCounter.toString();
@@ -607,7 +607,13 @@
       var allPre = codespace.selectAll('pre')
         .on("click", function(d,i) {
           console.log(d);
-          var lineId = "#L" + fileCounter.toString()  + '_'+ i.toString();
+          var lineNo = i-9;
+          if(lineNo<1){
+            var lineId = "#L9";
+          }
+          else{
+            var lineId = "#L" + fileCounter.toString()  + '_'+ lineNo.toString();
+          }
           seeSoftZoom(16);
           //var codespace = d3.select('#SeeSoftView');
           //var allPre = codespace.selectAll('pre');

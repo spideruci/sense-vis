@@ -131,5 +131,9 @@ Tabs finally working.
 **6c2cbaff97c80093f80c6a4448bd2803ca4d2d50**
 Minor bug fixes with tabs. Removed the jQuery search.
 
-**The next one**
+**1be0f184a8af215aa6d97b075c32b1775fce0422**
 Added the X button to close tabs.
+
+**The next one**
+Changed the UI by putting the zoom changer and tab selector on the header.
+The default tab opens to the tree map.
