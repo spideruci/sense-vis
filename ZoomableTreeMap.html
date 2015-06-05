@@ -131,8 +131,8 @@
       if(d3.event !=null) d3.event.stopPropagation();
 
   });
-  var c_id = '';
-  var c_secret = '';
+  var c_id = '936ff258c465549d45e2';
+  var c_secret = '932f1fd05ae6723a4019d9d5fe3561635ad89425';
   var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
   var displayCounter = 0;
   var currentFile = 0;
@@ -370,9 +370,9 @@
       .attr("id", function(d,i) {
         filesToNumbers[d.path] = i;
         return "grad" + i.toString() ; })
-      .attr("cx","100%")
-      .attr("cy","100%")
-      .attr("r","10%");
+      .attr("fx","50%")
+      .attr("fy","50%")
+      .attr("r","100%");
       //.attr("fx","50%")
       //.attr("fy","50%");
     console.log(filesToNumbers);
@@ -382,8 +382,11 @@
       .attr("stop-color",function(d) { return color(d.parent.name); });*/
 
     gradient.append("svg:stop")
+      .attr("id", function(d,i) {
+        filesToNumbers[d.path] = i;
+        return "stop" + i.toString() ; })
       .attr("offset","0%")
-      .attr("stop-color","#ffffff");
+      .attr("stop-color","#cccccc");
 
     gradient.append("svg:stop")
       .attr("offset","70%")
@@ -864,21 +867,19 @@
             //for single commit
             data.files.forEach(function(e) {
               d3.select(escape("#"+e.filename))
-                .transition().duration(700);
+                ;
+              //  .style("fill", function(d){return d3.rgb(this.style.fill).brighter(0.5);});
               //console.log(e.filename);
               var fileNo = filesToNumbers[e.filename];
-              var radialDef = d3.select("#grad"+fileNo.toString());
-              var currentRadius = radialDef.attr("r");
-              var currentRadiusValue = parseInt(currentRadius);
-              currentRadiusValue *= 2.1;
+              //var radialDef = d3.select("#grad"+fileNo.toString());
+              var stop = d3.select("#stop"+fileNo.toString());
+              var curStopColor = stop.attr("stop-color");
+              console.log(curStopColor);
+              stop.transition().duration(1000).attr("stop-color",function(d){
+                              return d3.rgb(curStopColor).brighter(3);    
+              });
 
-              var newRadius = currentRadiusValue.toString() + "%";
-              radialDef.attr("r",newRadius);
-              //currentRadius = currentRadius * 1.5
-              //radialDef.attr("r",);//,"2%");
-                //.style("fill", function(d){return d3.rgb(this.style.fill).brighter(0.5);});
-            //  if(commits[e.filename]==null) commits[e.filename] = 1;
-            //  else commits[e.filename] = commits[e.filename] + 1;
+              
             });
 
             //console.log(commits);
