@@ -62,3 +62,22 @@ rect {
   font-size: 12px;
   font-family: sans-serif;
 }
+
+pre {
+  border:0px;
+  padding:0px;
+  white-space: pre-wrap;       /* CSS 3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+.body {
+  padding: 140px 0 0;
+}
+.jumbotron {
+  padding: 5px 0;
+}
+
+.syntaxhighlighter {
+   overflow-y: scroll !important;
+   overflow-x: hidden !important;
+   height: 480px;
+}
