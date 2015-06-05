@@ -1,1 +1,2 @@
-.zedstate
+*.zedstate
+*.DS_Store
