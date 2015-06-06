@@ -37,7 +37,7 @@
       });
     });
   }
-  
+
   var mc = autocomplete(document.getElementById('test'))
     .keys(keys)
     .dataField("State")
@@ -234,10 +234,8 @@
     })
     .on("dblclick", function(d) {
       console.log("Double Clicked");
-      zoom(d);
-      /*displayFile(d, function(str) {
-        return atob(str.replace(/\s/g, '')).replace(/\n/g, "<br/>");
-      });*/
+      showDetails(d);
+      //zoom(d);
     })
     .on("contextmenu", function(d) {
       console.log("Double Clicked");
@@ -761,10 +759,10 @@
               var curStopColor = stop.attr("stop-color");
               console.log(curStopColor);
               stop.transition().duration(1000).attr("stop-color",function(d){
-                              return d3.rgb(curStopColor).brighter(3);    
+                              return d3.rgb(curStopColor).brighter(3);
               });
 
-              
+
             });
 
             //console.log(commits);
