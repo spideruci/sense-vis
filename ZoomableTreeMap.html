@@ -19,7 +19,16 @@
   <script src="js/functions_background.js" type="text/javascript"></script>
   <script src="js/functions_treemap.js" type="text/javascript"></script>
   <script src="js/functions_seesoft.js" type="text/javascript"></script>
+  <script src="js/analysis/source-coverage.js" type="text/javascript"></script>
+  <script src="js/analysis/coverage.js" type="text/javascript"></script>
 
+  <style>
+    @font-face {
+      font-family: 'Glyphicons Halflings';
+      src: url('../fonts/glyphicons-halflings-regular.eot');
+      src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+    }
+  </style>
 </head>
 
 <body class="body">
@@ -68,17 +77,25 @@
     <div class="row">
       <div class="col-md-12 text-center" id="TreemapSpace"></div>
     </div>
+
     <br>
+
   </div>
 
   </div>
   <hr>
   <h3>Test Cases</h3>
-  <div id='testcases'></div>
-  </body>
+
+  <div class="row">
+    <div class='col-md-12'>
+      <div id='testcases'></div>
+    </div>
+  </div>
+
+
 
   <script src="js/spidersense-ui.js" type="text/javascript"></script>
-  <script src="js/analysis/source-coverage.js" type="text/javascript"></script>
-  <script src="js/analysis/coverage.js" type="text/javascript"></script>
+
   <script src="js/coverage-ui.js" type="text/javascript"></script>
+</body>
 </html>

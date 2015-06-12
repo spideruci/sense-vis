@@ -12,8 +12,8 @@
 
   });
 
-  var c_id = '';
-  var c_secret = '';
+  var c_id = '64101f07b81df4a0a612';
+  var c_secret = 'dc98f8601675f4a88609e7957fa710ec0236fe38';
   var o_str = 'client_id='+c_id+'&client_secret='+c_secret;
   var displayCounter = 0;
   var currentFile = 0;

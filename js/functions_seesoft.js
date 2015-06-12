@@ -129,13 +129,17 @@ function displayFile(file, decoder) {
     .append("a");
   listElement.attr("data-toggle","tab")
     .attr("class",contentID)
-    .text(file.name);
+    .text(file.name + "  ");
     //<input id="zoomRestoreButton" type="button" value="Restore"/>
-  listElement.append("input")
+  /*listElement.append("button")
     .attr("id","X"+contentID)
     .attr("type","button")
-    .attr("class","close")
-    .attr("value","X");
+    .attr("class","btn btn-default btn-xs")*/
+  listElement.append("span")
+    .attr("id","X"+contentID)
+    .attr("class","glyphicon glyphicon-remove "+contentID)
+    .attr("aria-hidden","true");
+    //.text("value","X");
   console.log(fileURL);
 
   /*d3.select("#TabContent")

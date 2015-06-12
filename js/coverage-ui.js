@@ -14,8 +14,9 @@ fetcher.fetch(repoName, function(data) {
   var coverage = new Coverage(data);
   var testcount = coverage.getTestCount();
   var tests = coverage.getTestNames();
-  
-  var testCaseDivs = d3.select('#testcases').data(tests)
+  console.log("tests");
+  console.log(tests);
+  var testCaseDivs = d3.select('#testcases').selectAll('div').data(tests)
   .enter().append('div')
   .attr('class', 'test');
   // .attr('id', function(d, i) {
@@ -35,24 +36,28 @@ fetcher.fetch(repoName, function(data) {
 
   function styleTestsLiveness(testcasedivs) {
     testcasedivs.html("");
-    testcasedivs.insert("span", ":first-child")
-    .attr('class', function(d, i) {
-      if(!coverage.isTestLive(i)) {
-        return 'test glyphicon glyphicon-remove';
-      }
-
-      return 'test glyphicon glyphicon-ok';
-    });
 
     testcasedivs.append("span")
-    .text(function(d, i) {
-      return i + ') ' + d;
-    });    
+      .attr('class', function(d, i) {
+        if(!coverage.isTestLive(i)) {
+          return "glyphicon glyphicon-pause";
+        }
+        return "glyphicon glyphicon-play";
+      })
+      .attr("aria-hidden","true");
+    testcasedivs.append("span")
+      .text(function(d, i) {
+        return "  " + i + ") "  + d;
+      });
+    /*testcasedivs.append("span")
+      .text(function(d, i) {
+        return i + ') ' + d;
+      });*/
   }
 
   styleTestResults(testCaseDivs);
   styleTestsLiveness(testCaseDivs);
-  
+
   // click is liveness
   testCaseDivs.on('click', function(d, i) {
     var isLive = coverage.isTestLive(i);
