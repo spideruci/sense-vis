@@ -40,9 +40,9 @@ fetcher.fetch(repoName, function(data) {
     testcasedivs.append("span")
       .attr('class', function(d, i) {
         if(!coverage.isTestLive(i)) {
-          return "glyphicon glyphicon-pause";
+          return "glyphicon glyphicon-remove";
         }
-        return "glyphicon glyphicon-play";
+        return "glyphicon glyphicon-ok";
       })
       .attr("aria-hidden","true");
     testcasedivs.append("span")
