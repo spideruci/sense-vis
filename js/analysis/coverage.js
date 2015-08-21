@@ -117,8 +117,6 @@ Coverage.prototype.getLivePassFailCount = function() {
   return [passCount, failCount];
 };
 
-
-
 Coverage.prototype.getSourceCoverage = function(sourceName) {
   var sourceCoverage = null;
   for(var i = 0; i < this.sources.length; i += 1) {
@@ -133,6 +131,24 @@ Coverage.prototype.getSourceCoverage = function(sourceName) {
   }
 
   return sourceCoverage;
+};
+
+Coverage.prototype.getLinesSus = function(sourceName) {
+  var sourceCoverage = this.getSourceCoverage(sourceName);
+  if(sourceCoverage === null) return undefined;
+  var livePassFail = coverage.getLivePassFailCount();
+  var totalLivePass = livePassFail[0];
+  var totalLiveFail = livePassFail[1];
+  sourceCoverage.getPassFailOnStmt(this);
+  sourceCoverage.getPassRatioAndFailRatio(totalLivePass, totalLiveFail);
+  sourceCoverage.getSpiderSense(totalLivePass, totalLiveFail);
+  return sourceCoverage.spiderStmts;
+};
+
+Coverage.prototype.firstAndLastLine = function(sourceName) {
+  var sourceCoverage = this.getSourceCoverage(sourceName);
+  if(sourceCoverage === null) return undefined;
+  return [sourceCoverage.first(), sourceCoverage.last()];
 };
 
 Coverage.prototype.isLineCovered = function(sourceName, lineNumber) {

@@ -40,13 +40,18 @@ function displayFileFromTab(file, decoder,fileCounter) {
     }
     var coded_source = data.content;
     var source = decoder(coded_source);
-    console.log(file.name);
+    console.log("palepu:" + file.name);
     codespace.append("pre")
       .text("The program is: ");
     var lines = source.split("<br/>");
 
-    var colors = ["red","green","yellow"];
-    var colors = ["#F2D8D8","#CCEBCD","#F2F1D5"];
+    function getRandomArbitrary(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    var colors = ["red","green","black"];
+    var colors = ["#CCEBCD","#F2F1D5", "#F2D8D8"];
+    colors = colors2(10, colors);
     for(var line = 0; line<lines.length; ++line){
       var lineNo = line+1;
       var lineId = "L" + fileCounter.toString() + '_'+ lineNo.toString();
@@ -56,7 +61,7 @@ function displayFileFromTab(file, decoder,fileCounter) {
         .text(lines[line])
         .style("font-family", "Courier")
         .style("font-size", "3px")
-        .style("background-color", colors[line%3])
+        .style("background-color", colors[getRandomArbitrary(0,9)])
         .style("margin-top", "0px")
         .style("margin-bottom", "0px")
         .style("overflow", "auto");
@@ -186,15 +191,34 @@ function displayFile(file, decoder) {
     }
     var coded_source = data.content;
     var source = decoder(coded_source);
-    console.log(file.name);
+    console.log("palepu2:" + file.name);
+    var file_full_name = file.path.split("java/")[1];
+    console.log(file_full_name);
     codespace.append("pre")
       .text("The program is: ");
     var lines = source.split("<br/>");
 
-    var colors = ["red","green","yellow"];
-    var colors = ["#F2D8D8","#CCEBCD","#F2F1D5"];
+    var fl = coverage.firstAndLastLine(file_full_name);
+    var first = fl[0];
+    var last = fl[1];
+    var spiders = coverage.getLinesSus(file_full_name);
+
+    // var colors = ["green","yellow","red"];
+    var colors = ["#CCEBCD","#F2F1D5", "#F2D8D8"];
+    colors = colors2(10, colors);
     for(var line = 0; line<lines.length; ++line){
       var lineNo = line+1;
+      var back_color = "white";
+      if(coverage.canExecuteLine(file_full_name, lineNo)) {
+        // var isLineCovered = coverage.isLineCovered(file_full_name, line) ? 9 : 0;
+        // back_color = colors[isLineCovered];
+        var spider = spiders[lineNo - first];
+        var color_index = Math.round((spider * 10) - 1);
+        if(color_index < 0) color_index = 0;
+        if(color_index > 9) color_index = 9;
+        back_color = colors[color_index];
+        console.log(back_color);
+      }
       var lineId = "L" + fileCounter.toString() + '_'+ lineNo.toString();
       codespace.append("div")
         .attr("id",lineId)
@@ -202,7 +226,7 @@ function displayFile(file, decoder) {
         .text(lines[line])
         .style("font-family", "Courier")
         .style("font-size", "3px")
-        .style("background-color", colors[line%3])
+        .style("background-color", back_color)
         .style("margin-top", "0px")
         .style("margin-bottom", "0px")
         .style("overflow", "auto");

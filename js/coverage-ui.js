@@ -2,8 +2,12 @@ var userName = d3.select('#user').property('value');
 var repoName = d3.select('#repo').property('value');
 var spider = {};
 
+
 var fetcher = new CoverageDataFetcher();
-fetcher.fetch(repoName, function(data) {
+var coverage = null;
+fetcher.fetch(repoName, show_tests);
+
+function show_tests(data) {
   d3.select('#testcases').html("");
   if(data === null) {
     d3.select('#testcases').html("<big>NO TEST DATA AVAILABLE</big>");
@@ -11,7 +15,7 @@ fetcher.fetch(repoName, function(data) {
   }
 
   console.log(data);
-  var coverage = new Coverage(data);
+  coverage = new Coverage(data);
   var testcount = coverage.getTestCount();
   var tests = coverage.getTestNames();
   console.log("tests");
@@ -86,4 +90,4 @@ fetcher.fetch(repoName, function(data) {
 
   spider.coverage = coverage;
 
-});
+}
